@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Colecionando</string>
+    <string name="digite_email">Digite seu e-mail</string>
+    <string name="digite_senha">Digite sua senha</string>
+    <string name="cadastrar_usuario">Não possui uma conta? Cadastre-se já!</string>
+    <string name="digite_nome">Digite seu nome</string>
+    <string name="login_entrar">ENTRAR</string>
+    <string name="cadastro_cad">CADASTRAR</string>
+</resources>

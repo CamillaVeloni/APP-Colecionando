@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "467825389052",
+    "firebase_url": "https://minha-colecao-38240.firebaseio.com",
+    "project_id": "minha-colecao-38240",
+    "storage_bucket": "minha-colecao-38240.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467825389052:android:2a9baf0f7a4b724a",
+        "android_client_info": {
+          "package_name": "com.app.teste.colecionando"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467825389052-48fi3m01s982m04a31tve5ensppfhjl6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.teste.colecionando",
+            "certificate_hash": "c1719eb8acf6885f0bc02a7a64846a85514e410b"
+          }
+        },
+        {
+          "client_id": "467825389052-edli0rqsqje4shmmpr0eonvm2utvfbpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc5FbVyODWvoI4ao_qGmLkI8KsVyOBUKc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467825389052-edli0rqsqje4shmmpr0eonvm2utvfbpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
