@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -61,12 +64,27 @@ public class CadastroActivity extends AppCompatActivity {
                     Toast.makeText(getContext(),
                             "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
 
-
                 }else{
-                    Toast.makeText(getContext(),
-                            "Não foi possivel realizar o cadastro", Toast.LENGTH_SHORT).show();
-                    // TRATAMENTO DE EXCEÇÃO //
+                    // TRATAMENTO DE EXCEÇÃO DO CADASTRO //
+                    String exceção = "";
+                    try {
+                        throw task.getException();
 
+                    }catch(FirebaseAuthWeakPasswordException e){ // quando a senha não é forte o bastante
+                                exceção = "A senha deve ter no mínimo 6 caracteres"; // menos de 6 caracteres
+
+                    }catch (FirebaseAuthInvalidCredentialsException e){ // quando o e-mail do usuário não está
+                        exceção = "Digite um e-mail válido";            // no padrão
+
+                    }catch (FirebaseAuthUserCollisionException e){ //quando o usuário tenta fazer um cadastro
+                        exceção = "Esse e-mail já foi cadastrado"; // com um e-mail já cadastrado
+
+                    }catch (Exception e){ // quando nenhuma das exceções de cima acontece
+                        exceção = "Não foi possivel cadastrar o usuário." + e.getMessage();
+                        e.printStackTrace(); // escrever no console o erro
+
+                    }
+                    Toast.makeText(getContext(), exceção, Toast.LENGTH_SHORT).show();
                 }
             }
         });
