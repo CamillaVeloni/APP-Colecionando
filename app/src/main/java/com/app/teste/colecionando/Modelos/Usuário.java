@@ -12,6 +12,10 @@ public class Usuário {
         this.email = email;
         this.senha = senha;
     }
+    public Usuário(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;

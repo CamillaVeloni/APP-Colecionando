@@ -2,11 +2,11 @@ package com.app.teste.colecionando.Activitys;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 public class CadastroActivity extends AppCompatActivity {
 
     private Button btnCadastro;
-    private EditText cadastroNome, cadastroEmail, cadastroSenha;
+    private TextInputEditText cadastroNome, cadastroEmail, cadastroSenha;
     private FirebaseAuth mAuth;
 
     @Override
@@ -58,33 +58,32 @@ public class CadastroActivity extends AppCompatActivity {
                 us.getEmail(), us.getSenha()
         ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (task.isSuccessful()){ // Verificar se foi possivel cadastrar o usuário
+            public void onComplete(@NonNull Task<AuthResult> task) { // Com esse método é possivel verificar se foi
+                                                                     // cadastrado o usuário
+                if (task.isSuccessful()){
                     Toast.makeText(getContext(),
                             "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
-
+                    finish();
                 }else{
-                    // TRATAMENTO DE EXCEÇÃO DO CADASTRO //
+                    // TRATAMENTO DE EXCEÇÃO //
                     String exceção = "";
                     try {
                         throw task.getException();
+                    }catch (FirebaseAuthWeakPasswordException e){ // Tratamento quando a senha não é forte
+                        exceção = "A senha tem que ter no mínimo 6 caracteres"; // < 6
 
-                    }catch(FirebaseAuthWeakPasswordException e){ // quando a senha não é forte o bastante
-                                exceção = "A senha deve ter no mínimo 6 caracteres"; // menos de 6 caracteres
+                    }catch (FirebaseAuthInvalidCredentialsException e){ // Tratamento quando o e-mail está
+                        exceção = "Insira um e-mail válido";            // fora do padrão
 
-                    }catch (FirebaseAuthInvalidCredentialsException e){ // quando o e-mail do usuário não está
-                        exceção = "Digite um e-mail válido";            // no padrão
+                    }catch (FirebaseAuthUserCollisionException e){      // Tratamento quando o e-mail já foi
+                        exceção = "O e-mail inserido já possui cadastro"; // cadastrado
 
-                    }catch (FirebaseAuthUserCollisionException e){ //quando o usuário tenta fazer um cadastro
-                        exceção = "Esse e-mail já foi cadastrado"; // com um e-mail já cadastrado
-
-                    }catch (Exception e){ // quando nenhuma das exceções de cima acontece
-                        exceção = "Não foi possivel cadastrar o usuário." + e.getMessage();
-                        e.printStackTrace(); // escrever no console o erro
-
+                    }catch (Exception e){ // Quando não é nenhum dos de cima
+                        exceção = "Não foi possivel ser feito o cadastro. " + e.getMessage();
+                        e.printStackTrace(); // escreve no console qual foi o erro
                     }
                     Toast.makeText(getContext(), exceção, Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
