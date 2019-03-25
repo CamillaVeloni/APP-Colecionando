@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,6 +28,16 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText loginSenha, loginEmail;
     TextView txtCadastrar;
     Button btnEntrar;
+
+    @Override
+    protected void onStart() {
+        FirebaseUser usuárioLogado = mAuth.getCurrentUser(); // VERIFICAR SE O USUÁRIO JÁ TÁ LOGADO
+        if (usuárioLogado != null){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         loginSenha = findViewById(R.id.loginSenha);
         txtCadastrar = findViewById(R.id.txtCadastrar);
         btnEntrar = findViewById(R.id.btnEntrar);
+        mAuth = ConfigFirebase.getFirebaseAuth();
 
         txtCadastrar.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logarUsuario(Usuário us){
-        mAuth = ConfigFirebase.getFirebaseAuth();
         mAuth.signInWithEmailAndPassword(us.getEmail(), us.getSenha()).addOnCompleteListener(
                 new OnCompleteListener<AuthResult>() {
             @Override
@@ -86,10 +97,12 @@ public class LoginActivity extends AppCompatActivity {
                         exceção = "Não foi possivel fazer o login. " + e.getMessage();
                         e.printStackTrace();
                     }
+                    Toast.makeText(getContext(), exceção, Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
 
     private Context getContext() {
         return this;
