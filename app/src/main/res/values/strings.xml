@@ -6,4 +6,16 @@
     <string name="digite_nome">Digite seu nome</string>
     <string name="login_entrar">ENTRAR</string>
     <string name="cadastro_cad">CADASTRAR</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_sair">Sair</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="nav_colec">Coleções</string>
+    <string name="nav_mColec">Minha Coleção</string>
+    <string name="nav_perfil">Minha Conta</string>
+    <string name="nav_config">Configuração</string>
 </resources>

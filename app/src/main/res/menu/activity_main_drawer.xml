@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_coleções"
+            android:icon="@drawable/ic_books_24dp"
+            android:title="@string/nav_colec" />
+        <item
+            android:id="@+id/nav_mColeção"
+            android:icon="@drawable/ic_collections_bookmark_24dp"
+            android:title="@string/nav_mColec" />
+        <item
+            android:id="@+id/nav_mConta"
+            android:icon="@drawable/ic_person_24dp"
+            android:title="@string/nav_perfil" />
+        <item
+            android:id="@+id/nav_config"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/nav_config" />
+    </group>
+
+</menu>
