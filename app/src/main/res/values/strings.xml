@@ -6,9 +6,9 @@
     <string name="digite_nome">Digite seu nome</string>
     <string name="login_entrar">ENTRAR</string>
     <string name="cadastro_cad">CADASTRAR</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_main">Colecionando</string>
+    <string name="navigation_drawer_open">Abrir barra de menu</string>
+    <string name="navigation_drawer_close">Fechar barra de menu</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -18,4 +18,7 @@
     <string name="nav_mColec">Minha Coleção</string>
     <string name="nav_perfil">Minha Conta</string>
     <string name="nav_config">Configuração</string>
+    <string name="nav_comunic">Ajuda e Contato</string>
+    <string name="nav_contato">Contato</string>
+    <string name="nav_sobre">Sobre</string>
 </resources>

@@ -4,22 +4,37 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_coleções"
-            android:icon="@drawable/ic_books_24dp"
+            android:icon="@drawable/ic_colecoes_24dp"
             android:title="@string/nav_colec" />
         <item
             android:id="@+id/nav_mColeção"
-            android:icon="@drawable/ic_collections_bookmark_24dp"
+            android:icon="@drawable/ic_minha_colecao_24dp"
             android:title="@string/nav_mColec" />
         <item
             android:id="@+id/nav_mConta"
-            android:icon="@drawable/ic_person_24dp"
+            android:icon="@drawable/ic_pessoa_24dp"
             android:title="@string/nav_perfil" />
         <item
             android:id="@+id/nav_config"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_config"
             android:title="@string/nav_config" />
     </group>
+    <item android:title="@string/nav_comunic">
+        <menu>
+            <item
+                android:id="@+id/nav_contato"
+                android:icon="@drawable/ic_contato_24dp"
+                android:title="@string/nav_contato"/>
+            <item
+                android:id="@+id/nav_sobre"
+                android:icon="@drawable/ic_sobre_24dp"
+                android:title="@string/nav_sobre"
+                />
+        </menu>
+
+    </item>
 
 </menu>
