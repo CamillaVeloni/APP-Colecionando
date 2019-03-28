@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(     // Criação da barra que fica no menu
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        // Passando o contexto, o objeto que recupera a interface, toolbar (onde o toggle é configurado),
+        // Passando: o contexto, o objeto que recupera a interface, toolbar (onde o toggle é configurado),
         // os 2 últimos parametros são para pessoas com deficiencias (textos)
         drawer.addDrawerListener(toggle); // configurar o toggle no drawer
         toggle.syncState(); // o toggle vai ser sincronizado e carregado novamente

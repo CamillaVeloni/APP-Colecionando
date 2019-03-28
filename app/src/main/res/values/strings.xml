@@ -9,8 +9,8 @@
     <string name="title_activity_main">Colecionando</string>
     <string name="navigation_drawer_open">Abrir barra de menu</string>
     <string name="navigation_drawer_close">Fechar barra de menu</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Nome</string>
+    <string name="nav_header_subtitle">email.exemplo@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_sair">Sair</string>
     <string name="action_search">Pesquisar</string>
