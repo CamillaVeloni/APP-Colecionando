@@ -2,6 +2,7 @@ package com.app.teste.colecionando.Activitys;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
+import com.app.teste.colecionando.Fragments.ColecoesFragment;
+import com.app.teste.colecionando.Fragments.ContaFragment;
+import com.app.teste.colecionando.Fragments.MinhaColecaoFragment;
 import com.app.teste.colecionando.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,6 +22,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
+    private ColecoesFragment fragColec;
+    private FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mAuth = ConfigFirebase.getFirebaseAuth();
+        fragColec = new ColecoesFragment();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // usado para que a toolbar funcione bem com versões anteriores
@@ -42,6 +49,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view); // Nele é que o usuário pode navegar pelas opções
         navigationView.setNavigationItemSelectedListener(this); // Método de navegação na própria activity
+
+        // SETANDO O FRAGMENT PRINCIPAL - COLEÇÕES //
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.FrameLayoutContainer, fragColec);
+        transaction.commit();
     }
 
     @Override
@@ -60,14 +72,29 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) { // Implementado por causa do uso da interface
         // Método chamado sempre que o usuário clicar em uma das opções do Nav
         int id = item.getItemId(); // Recuperar o id do item clicado
+        // Verificar qual a opção clicada através do id
+        if (id == R.id.nav_coleções) { // Entrar fragment Coleções
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.FrameLayoutContainer, fragColec);
+            transaction.commit();
 
-        if (id == R.id.nav_coleções) { // Verificar qual a opção clicada através do id
+        } else if (id == R.id.nav_mColeção) { // Entrar fragment Minha Coleção
+            MinhaColecaoFragment mColecFragment = new MinhaColecaoFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.FrameLayoutContainer, mColecFragment);
+            transaction.commit();
 
-        } else if (id == R.id.nav_mColeção) {
-
-        } else if (id == R.id.nav_mConta) {
+        } else if (id == R.id.nav_mConta) { // Entrar fragment Minha Conta
+            ContaFragment contaFragment = new ContaFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.FrameLayoutContainer, contaFragment);
+            transaction.commit();
 
         } else if (id == R.id.nav_config) {
+
+        } else if (id == R.id.nav_contato) {
+
+        } else if (id == R.id.nav_sobre) {
 
         }
 
