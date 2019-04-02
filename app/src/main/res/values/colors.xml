@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#005580</color>
     <color name="colorAccent">#0088CC</color>
     <color name="colorText">#ffffff</color>
+    <color name="cinza_color">#EEEEEE</color>
 </resources>

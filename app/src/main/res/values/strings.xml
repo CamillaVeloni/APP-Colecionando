@@ -1,19 +1,27 @@
 <resources>
+
+    <!-- Nome do app -->
     <string name="app_name">Colecionando</string>
+    <string name="title_activity_main">Colecionando</string>
+
+    <!-- Strings Cadastro & Autenticação -->
     <string name="digite_email">Digite seu e-mail</string>
     <string name="digite_senha">Digite sua senha</string>
     <string name="cadastrar_usuario">Não possui uma conta? Cadastre-se já!</string>
     <string name="digite_nome">Digite seu nome</string>
     <string name="login_entrar">ENTRAR</string>
     <string name="cadastro_cad">CADASTRAR</string>
-    <string name="title_activity_main">Colecionando</string>
+
+    <!-- Strings do NavigationView p1-->
     <string name="navigation_drawer_open">Abrir barra de menu</string>
     <string name="navigation_drawer_close">Fechar barra de menu</string>
+
+    <!-- Strings do NavigationView p2 - parte do navigation_header_main -->
     <string name="nav_header_title">Nome</string>
     <string name="nav_header_subtitle">email.exemplo@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_sair">Sair</string>
-    <string name="action_search">Pesquisar</string>
+
+    <!-- Strings do NavigationView p3 - parte das opções main_drawer -->
     <string name="nav_colec">Coleções</string>
     <string name="nav_mColec">Minha Coleção</string>
     <string name="nav_perfil">Minha Conta</string>
@@ -22,6 +30,13 @@
     <string name="nav_contato">Contato</string>
     <string name="nav_sobre">Sobre</string>
 
+    <!-- Strings action bar -->
+    <string name="action_sair">Sair</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="action_editar">Editar perfil</string>
+
+    <!-- Strings de fragment - Minha Conta -->
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="minhaConta_nome">Nome do usuário</string>
+    <string name="minhaConta_email">E-mail do usuário</string>
 </resources>

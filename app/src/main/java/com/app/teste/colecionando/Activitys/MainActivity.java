@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity
 
         mAuth = ConfigFirebase.getFirebaseAuth();
         fragColec = new ColecoesFragment();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // usado para que a toolbar funcione bem com versões anteriores
+
 
         // CONFIGURAÇÃO DO NAV. DRAWER
         DrawerLayout drawer = findViewById(R.id.drawer_layout); // Recuperando o layout drawer que fica
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_mConta) { // Entrar fragment Minha Conta
             ContaFragment contaFragment = new ContaFragment();
+            contaFragment.setHasOptionsMenu(true); // Método para que a fragment possa reescrever o onCreateOptionsMenu
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.FrameLayoutContainer, contaFragment);
             transaction.commit();
@@ -112,9 +113,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Ações para o action bar ficam aqui
-
+    public boolean onOptionsItemSelected(MenuItem item) { // Ações para a action bar ficam aqui
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case R.id.action_sair:
