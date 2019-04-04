@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Usuário;
 import com.app.teste.colecionando.R;
@@ -19,12 +20,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class CadastroActivity extends AppCompatActivity {
 
     private Button btnCadastro;
     private TextInputEditText cadastroNome, cadastroEmail, cadastroSenha;
     private FirebaseAuth mAuth;
+    private DatabaseReference referenciaDatabase;
+    private Usuário usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class CadastroActivity extends AppCompatActivity {
         cadastroNome = findViewById(R.id.cadastroNome);
         cadastroEmail = findViewById(R.id.cadastroEmail);
         cadastroSenha = findViewById(R.id.cadastroSenha);
+        usuario = new Usuário();
 
         btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,9 +48,10 @@ public class CadastroActivity extends AppCompatActivity {
                 // VERIFICAR SE TODOS OS CAMPOS FORAM PREENCHIDOS
                 if(!cadastroNome.getText().toString().isEmpty() && !cadastroEmail.getText().toString().isEmpty()
                         && !cadastroSenha.getText().toString().isEmpty()){
-                    Usuário usuario = new Usuário(cadastroNome.getText().toString(),
-                            cadastroEmail.getText().toString(), cadastroSenha.getText().toString());
-                    cadastrarUsuarioFirebase(usuario);
+                    usuario.setEmail(cadastroEmail.getText().toString());
+                    usuario.setNome(cadastroNome.getText().toString());
+                    usuario.setSenha(cadastroSenha.getText().toString());
+                    cadastrarUsuarioFirebase();
                 }else{
                     Toast.makeText(getContext(), "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
                 }
@@ -52,18 +59,25 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
-    public void cadastrarUsuarioFirebase(Usuário us){ // CADASTRAR USUÁRIO NO FIREBASE
+    public void cadastrarUsuarioFirebase(){ // CADASTRAR USUÁRIO NO FIREBASE
         mAuth = ConfigFirebase.getFirebaseAuth();
         mAuth.createUserWithEmailAndPassword(
-                us.getEmail(), us.getSenha()
+                usuario.getEmail(), usuario.getSenha()
         ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) { // Com esse método é possivel verificar se foi
                                                                      // cadastrado o usuário
                 if (task.isSuccessful()){
-                    Toast.makeText(getContext(),
-                            "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
-                    finish();
+
+                    boolean addSucesso = addUsuarioData(usuario);
+                    if(addSucesso){
+                        Toast.makeText(getContext(),
+                                "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+
+                        // ADICIONANDO UM NOME NO PERFIL DO USUÁRIO -- VALE RESSALTAR QUE É O DISPLAY NAME
+                        UsuárioFirebase.atualizarNomeUsuario(usuario.getNome());
+                        finish();
+                    }
                 }else{
                     // TRATAMENTO DE EXCEÇÃO //
                     String exceção = "";
@@ -88,6 +102,21 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public boolean addUsuarioData(Usuário usuario){
+        try {
+            referenciaDatabase = ConfigFirebase.getFirebaseDatabase(); // nó de usuários - 'equivale' a tabela
+            referenciaDatabase.child("usuarios").child(mAuth.getCurrentUser().getUid()).setValue(usuario); // gerar chave automaticamente e passar usuário p banco
+
+            return true;
+
+        }catch (Exception e){
+            Toast.makeText(getContext(),
+                    "Não foi possível cadastrar o usuário", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private Context getContext() { // RETORNAR CONTEXTO DA TELA

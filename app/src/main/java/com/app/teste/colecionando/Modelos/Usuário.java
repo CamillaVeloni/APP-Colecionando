@@ -1,5 +1,7 @@
 package com.app.teste.colecionando.Modelos;
 
+import com.google.firebase.database.Exclude;
+
 public class Usuário {
 
     private String nome, email, senha;
@@ -25,8 +27,14 @@ public class Usuário {
         this.email = email;
     }
 
+    @Exclude // faz com que essa váriavel não vá p/ o banco de dados
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Exclude //
+    public String getSenha() {
+        return senha;
     }
 
     public String getNome() {
@@ -37,7 +45,4 @@ public class Usuário {
         return email;
     }
 
-    public String getSenha() {
-        return senha;
-    }
 }
