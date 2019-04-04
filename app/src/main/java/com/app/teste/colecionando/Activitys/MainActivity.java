@@ -1,5 +1,6 @@
 package com.app.teste.colecionando.Activitys;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -131,5 +132,9 @@ public class MainActivity extends AppCompatActivity
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    private Context getContext() { // RETORNAR CONTEXTO DA TELA
+        return this;
     }
 }

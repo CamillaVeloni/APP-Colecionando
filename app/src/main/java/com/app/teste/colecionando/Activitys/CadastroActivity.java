@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Usuário;
 import com.app.teste.colecionando.R;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 public class CadastroActivity extends AppCompatActivity {
@@ -71,6 +73,9 @@ public class CadastroActivity extends AppCompatActivity {
                     if(addSucesso){
                         Toast.makeText(getContext(),
                                 "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+
+                        // ADICIONANDO UM NOME NO PERFIL DO USUÁRIO -- VALE RESSALTAR QUE É O DISPLAY NAME
+                        UsuárioFirebase.atualizarNomeUsuario(usuario.getNome());
                         finish();
                     }
                 }else{
@@ -102,7 +107,7 @@ public class CadastroActivity extends AppCompatActivity {
     public boolean addUsuarioData(Usuário usuario){
         try {
             referenciaDatabase = ConfigFirebase.getFirebaseDatabase(); // nó de usuários - 'equivale' a tabela
-            referenciaDatabase.child("usuarios").push().setValue(usuario); // gerar chave automaticamente e passar usuário p banco
+            referenciaDatabase.child("usuarios").child(mAuth.getCurrentUser().getUid()).setValue(usuario); // gerar chave automaticamente e passar usuário p banco
 
             return true;
 
