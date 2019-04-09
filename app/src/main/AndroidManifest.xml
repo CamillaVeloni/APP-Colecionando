@@ -13,13 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activitys.CadastroColecaoActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".Activitys.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activitys.CadastroColecaoActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activitys.MainActivity"></activity>
         <activity android:name=".Activitys.CadastroActivity" />
         <activity android:name=".Activitys.LoginActivity">
             <intent-filter>

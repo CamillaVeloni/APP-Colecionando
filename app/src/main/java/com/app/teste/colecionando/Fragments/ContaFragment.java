@@ -167,55 +167,17 @@ public class ContaFragment extends Fragment {
         if(requestCode == REQUEST_CODE_IMAGE_GALLERY && resultCode == Activity.RESULT_OK){
 
             try {
-                Uri localImgArmazenada = data.getData(); // Recuperando o local da imagem selecionada
+                // Recuperando a img selecionada
+                Uri imgSelecionada = data.getData(); // caminho da img
                 Bitmap img = MediaStore.Images.Media.getBitmap(
-                        context.getContentResolver(), localImgArmazenada); // getContentResolver é um objeto responsavel por recuperar
-                                                                           // os conteúdos do app android
-                // Verificando se a imagem é diferente de nulo
-                if (img != null){
+                        context.getContentResolver(), imgSelecionada); // getContentResolver é um objeto responsavel por recuperar
+
+                if(img != null) {
                     imgPerfil.setImageBitmap(img);
                     CircleImageView foto_nav = headerView.findViewById(R.id.image_nav_header);
                     foto_nav.setImageBitmap(img);
 
-                    // Recuperar dados p/ passar pro firebase
-                    ByteArrayOutputStream byteArrayOutS = new ByteArrayOutputStream();
-                    img.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutS);
-                    byte[] dadosImagem = byteArrayOutS.toByteArray();
-
-                    // Salvando imagem no firebase
-                    String uidUsuario = UsuárioFirebase.getIdentificadorUsuario();
-                    StorageReference imgPerfilSalvar = storageReference
-                            .child("imagens")
-                            .child("perfil")
-                            .child(uidUsuario + ".jpeg");
-
-                    UploadTask upTask = imgPerfilSalvar.putBytes(dadosImagem);
-
-                    // Teste p/ verificar se funcionou ou não
-                    upTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) { // Caso não for feito o upload da img
-                            Toast.makeText(context,
-                                    "Erro ao fazer o upload da imagem", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) { // Caso for feito o upload da img
-                            Toast.makeText(context,
-                                    "Sucesso ao fazer o upload da imagem", Toast.LENGTH_SHORT).show();
-
-                            // ATUALIZANDO FOTO DE PERFIL DO USUÁRIO NO FIREBASE
-
-                            // Maneira para pegar a url do arquivo guardado no Storage do firebase
-                            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() { // O método getDownloadUril vai retornar um obj Uri
-                                @Override
-                                public void onSuccess(Uri url) { // O objt Uri vai ser passado por parametro no método onSuccess
-                                    UsuárioFirebase.atualizarFotoUsuario(url); // metodo debaixo
-                                }
-                            });
-                        }
-                    });
-
+                    UsuárioFirebase.atualizarFotoUsuario(imgSelecionada);
                 }
 
             } catch (IOException e) {

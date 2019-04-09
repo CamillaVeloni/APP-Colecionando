@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -42,17 +42,6 @@
             app:srcCompat="@drawable/imgpadrao_colec1" />
 
     </LinearLayout>
-
-    <Spinner
-        android:id="@+id/cadastroColec_spCateg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginBottom="8dp"
-        android:padding="10dp" />
 
     <EditText
         android:id="@+id/cadastroColec_nome"
@@ -86,29 +75,29 @@
         android:singleLine="false"
         android:textAlignment="textStart" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.blackcat.currencyedittext.CurrencyEditText
+        android:id="@+id/cadastroColec_valor"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/edit_text_design"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="10dp" />
 
-        <com.blackcat.currencyedittext.CurrencyEditText
-            android:id="@+id/cadastroColec_valor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_design"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:padding="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/cadastroColec_etiq"
-            android:layout_width="match_parent"
+            android:layout_width="389dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginLeft="6dp"
@@ -120,36 +109,63 @@
             android:ems="10"
             android:hint="@string/minhaColec_etiqueta"
             android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/cadastroColec_spCateg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:dropDownHeight="100dp"
             android:padding="10dp" />
+
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/cadastroColec_ondeComp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/edit_text_design"
-        android:ems="10"
-        android:hint="@string/minhaColec_compradoOnde"
-        android:inputType="textPersonName"
-        android:padding="10dp" />
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/cadastroColec_checkAd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginBottom="6dp"
-        android:padding="10dp"
-        android:text="@string/minhaColec_adquiridoBool"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/cadastroColec_ondeComp"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_design"
+            android:ems="10"
+            android:enabled="false"
+            android:hint="@string/minhaColec_compradoOnde"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/cadastroColec_checkAd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="40"
+            android:padding="10dp"
+            android:text="@string/minhaColec_adquiridoBool"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/cadastroColec_btnAdd"

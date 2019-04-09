@@ -41,11 +41,31 @@
     <!-- Strings de Fragment - Minha Coleção -->
     <string name="minhaColec_nome">Digite o nome do colecionável</string>
     <string name="minhaColec_descr">Digite uma descrição/Informação geral</string>
-    <string name="minhaColec_compradoOnde">Digite aonde foi comprado</string>
+    <string name="minhaColec_compradoOnde">Aonde foi adquirido</string>
     <string name="minhaColec_valor">Digite o valor</string>
-    <string name="minhaColec_etiqueta">Etiqueta</string>
+    <string name="minhaColec_etiqueta">Etiqueta Customizada</string>
     <string name="minhaColec_categoria">Categoria</string>
     <string name="minhaColec_adicionar">Adicionar</string>
     <string name="minhaColec_adquiridoBool">Adquirido</string>
     <string name="mColec_foto">Imagem</string>
+
+    <!-- Strings de Categorias - Adicionar Categoria no Colecionável (Spinner) -->
+    <string-array name="minhaColec_categorias">
+        <item>Acessórios</item>
+        <item>Armas</item>
+        <item>Brinquedos</item>
+        <item>Cromos</item>
+        <item>Discos</item>
+        <item>Die-cast</item>
+        <item>Cartas colecionáveis</item>
+        <item>Latas e garrafas</item>
+        <item>Revistas em quadrinhos</item>
+        <item>Bonecas</item>
+        <item>Autografomania</item>
+        <item>Notafilia</item>
+        <item>Numismática</item>
+        <item>Filatelia</item>
+        <item>Cartofilia</item>
+        <item>Bibliofilia</item>
+    </string-array>
 </resources>
