@@ -48,6 +48,7 @@
     <string name="minhaColec_adicionar">Adicionar</string>
     <string name="minhaColec_adquiridoBool">Adquirido</string>
     <string name="mColec_foto">Imagem</string>
+    <string name="minhaColec_publico">Publico</string>
 
     <!-- Strings de Categorias - Adicionar Categoria no Colecionável (Spinner) -->
     <string-array name="minhaColec_categorias">
