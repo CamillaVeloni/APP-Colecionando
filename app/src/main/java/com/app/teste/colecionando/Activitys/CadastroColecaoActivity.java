@@ -158,7 +158,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
             startActivityForResult(intent, rqCode);
         }
     }
-    public void verificarCampos(){ // click do btn adicionar
+    public void verificarCampos(){ // VALIDAÇÃO DOS CAMPOS E DA IMAGENS
 
         if(listaCaminhosFotos.size() != 0){ // Verificando se foi selecionada pelo menos 1 foto
 
@@ -178,7 +178,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 if(booleanaChecked){ // Verificação dos campos acaba aqui -> passando para método de salvar os dados no firebase
 
                     Colecionável colecionávelAdd = new Colecionável(txtNome.getText().toString(), txtDesc.getText().toString(),
-                            String.valueOf(txtValor.getRawValue()), spinnerCategorias.getSelectedItem().toString(),
+                            txtValor.getText().toString(), spinnerCategorias.getSelectedItem().toString(),
                             checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido, imagens
                     if(!txtEtiq.getText().toString().isEmpty()){
                         colecionávelAdd.setEtiquetaCustomizada(txtEtiq.getText().toString());
@@ -226,7 +226,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
                         listaFotosFirebase.add(urlConvertida);
                         if(qntdFotos == listaFotosFirebase.size()){
                             colecionável.setImagens(listaFotosFirebase); // setando o url das imagens de dentro do firebase
-                            colecionável.salvarColecionável();
+                            colecionável.salvarColecionável(); // SALVANDO COLECIONÁVEL ATRAVÉS DO MODELO DE CLASSE 'COLECIONÁVEL'
                         }
                     }
                 });
