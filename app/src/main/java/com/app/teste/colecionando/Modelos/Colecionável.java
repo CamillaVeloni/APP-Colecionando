@@ -13,6 +13,7 @@ public class Colecionável {
     private String valor, etiquetaCustomizada;
     private String categoria, localCompra;
     private boolean boolAdquirido;
+    private boolean boolPublico;
     private List<String> imagens;
 
     public Colecionável() {
@@ -114,12 +115,35 @@ public class Colecionável {
         this.boolAdquirido = boolAdquirido;
     }
 
-    public void salvarColecionável(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE
+    public boolean isBoolPublico() {
+        return boolPublico;
+    }
+
+    public void setBoolPublico(boolean boolPublico) {
+        this.boolPublico = boolPublico;
+    }
+
+
+    // ARRUMAR PARTE DE MINHA_COLEÇÃO. 1- ABA PARA COLECIONÁVEL JÁ ADQUIRIDO. 2 - ABA PARA COLECIONÁVEL AINDA NÃO ADQUIRIDO
+    public void salvarColecionável(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE = NA 'MINHA_COLEÇÃO'
         DatabaseReference databaseReference = ConfigFirebase.getFirebaseDatabase().
                 child("minha_coleção");
         databaseReference.child(UsuárioFirebase.getIdentificadorUsuario()) // id_usuário
                 .child(getIdColecionavel()) // id_colecionável
                 .setValue(this); // setando dados
+
+        if(this.boolPublico){
+            salvarColecionávelPublico();
+        }
+    }
+
+    private void salvarColecionávelPublico(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE = NA PARTE PUBLICA -- 'GALERIA_DE_COLECIONAVEIS'
+        DatabaseReference databaseReference = ConfigFirebase.getFirebaseDatabase().
+                child("galeria_coleções");
+        databaseReference.child(getCategoria()) // id_usuário
+                .child(getIdColecionavel()) // id_colecionável
+                .setValue(this); // setando dados
+
     }
 
 }

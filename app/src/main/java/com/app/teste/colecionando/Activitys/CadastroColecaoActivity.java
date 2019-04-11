@@ -14,15 +14,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,19 +26,20 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.forms.sti.progresslitieigb.ProgressLoadingJIGB;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -58,6 +55,8 @@ public class CadastroColecaoActivity extends AppCompatActivity
     private CurrencyEditText txtValor;
     private Spinner spinnerCategorias;
     private CheckBox checkAdq;
+    private Switch switchPublico;
+    private String imgUrl1, imgUrl2, imgUrl3;
     private List<String> listaCaminhosFotos = new ArrayList<>(); // lista de url dentro do aparelho do usuário
     private List<String> listaFotosFirebase = new ArrayList<>(); // lista de url recuperadas do firebase
     private final static int REQUEST_CODE_READ_EXTERNAL_STORAGE = 1;
@@ -66,6 +65,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_colecao);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar_mColec);
         setSupportActionBar(toolbar);
@@ -98,6 +98,11 @@ public class CadastroColecaoActivity extends AppCompatActivity
         spinnerCategorias = findViewById(R.id.cadastroColec_spCateg);
         checkAdq = findViewById(R.id.cadastroColec_checkAd);
         btnAdd = findViewById(R.id.cadastroColec_btnAdd);
+        switchPublico = findViewById(R.id.switchPublico);
+
+        imgUrl1 = "";
+        imgUrl2 = "";
+        imgUrl3 = "";
 
         // CONFIGURAÇÃO DO SPINNER //
         String[] categorias = getResources()
@@ -114,9 +119,12 @@ public class CadastroColecaoActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     txtComp.setEnabled(true);
+                    switchPublico.setVisibility(View.VISIBLE);
                 }else{
                     txtComp.setEnabled(false);
                     txtComp.setText(null);
+                    switchPublico.setVisibility(View.GONE);
+                    switchPublico.setChecked(false);
                 }
             }
         });
@@ -160,7 +168,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
     }
     public void verificarCampos(){ // VALIDAÇÃO DOS CAMPOS E DA IMAGENS
 
-        if(listaCaminhosFotos.size() != 0){ // Verificando se foi selecionada pelo menos 1 foto
+        if(!imgUrl1.equals("") || !imgUrl2.equals("") || !imgUrl3.equals("")){ // Verificando se foi selecionada pelo menos 1 foto
 
             if(!txtNome.getText().toString().isEmpty() && !txtDesc.getText().toString().isEmpty() &&
                     txtValor.getRawValue() != 0){ // Verificando se os campos NOME, DESCRIÇÃO, VALOR foram preenchidos direito
@@ -180,10 +188,22 @@ public class CadastroColecaoActivity extends AppCompatActivity
                     Colecionável colecionávelAdd = new Colecionável(txtNome.getText().toString(), txtDesc.getText().toString(),
                             txtValor.getText().toString(), spinnerCategorias.getSelectedItem().toString(),
                             checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido, imagens
+
                     if(!txtEtiq.getText().toString().isEmpty()){
                         colecionávelAdd.setEtiquetaCustomizada(txtEtiq.getText().toString());
+
                     }if(checkAdq.isChecked()){
                         colecionávelAdd.setLocalCompra(txtComp.getText().toString());
+                        if(switchPublico.isChecked()){
+                            colecionávelAdd.setBoolPublico(true);
+                        }
+                    }
+                    if(!imgUrl1.equals("")){
+                        listaCaminhosFotos.add(imgUrl1);
+                    }if(!imgUrl2.equals("")){
+                        listaCaminhosFotos.add(imgUrl2);
+                    }if(!imgUrl3.equals("")){
+                        listaCaminhosFotos.add(imgUrl3);
                     }
                     colecionável = colecionávelAdd;
                     salvarDadosFirebase();
@@ -198,9 +218,12 @@ public class CadastroColecaoActivity extends AppCompatActivity
         }
 
     }
-    public void salvarDadosFirebase(){
+    public void salvarDadosFirebase(){ // MÉTODO PRINCIPAL NO SALVAMENTO DOS DADOS NO FIREBASE
+
+        ProgressLoadingJIGB.startLoadingJIGB(getContext(),R.raw.trail_loading, // Travando tela para 'Carregar' - progress loading
+                "",0,600,600);
+
         for(int i = 0; i < listaCaminhosFotos.size(); i++){
-            toastPadrao("Int" + i);
             String urlImg = listaCaminhosFotos.get(i);
             int qntdFotos = listaCaminhosFotos.size();
             salvarFotosFirebase(urlImg, qntdFotos, i); // PRIMEIRO É SALVO AS FOTOS NO STORAGE
@@ -222,11 +245,13 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() { // O método getDownloadUrl vai retornar um obj Uri
                     @Override
                     public void onSuccess(Uri url) { // O objt Uri vai ser passado por parametro no método onSuccess
-                        String urlConvertida = url.toString();
+                        String urlConvertida = url.toString(); // url da imagem dentro do firebase -> Vai ser usada para colocar no database
                         listaFotosFirebase.add(urlConvertida);
                         if(qntdFotos == listaFotosFirebase.size()){
                             colecionável.setImagens(listaFotosFirebase); // setando o url das imagens de dentro do firebase
                             colecionável.salvarColecionável(); // SALVANDO COLECIONÁVEL ATRAVÉS DO MODELO DE CLASSE 'COLECIONÁVEL'
+                            ProgressLoadingJIGB.finishLoadingJIGB(getContext()); // Retirando o progress loading
+                            finish();
                         }
                     }
                 });
@@ -263,16 +288,17 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 // os conteúdos do app android
 
                 if(img != null){
+                    int num = 0;
                     // Mostrando foto em umas das 3 imgViews
                     if(requestCode == 1){
                         img1.setImageBitmap(img);
-                        listaCaminhosFotos.add(0, localImg); // colocando o caminho da img no array para depois salvar no firebase
+                        imgUrl1 = localImg;
                     }else if(requestCode == 2){
                         img2.setImageBitmap(img);
-                        listaCaminhosFotos.add(1, localImg);
+                        imgUrl2 = localImg;
                     }else if(requestCode == 3){
                         img3.setImageBitmap(img);
-                        listaCaminhosFotos.add(2, localImg);
+                        imgUrl3 = localImg;
                     }
                 }
 
@@ -280,9 +306,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-
         }
-
     }
 
     // TRATAMENTO QUANDO O USUÁRIO NEGAR A PERMISSÃO //
