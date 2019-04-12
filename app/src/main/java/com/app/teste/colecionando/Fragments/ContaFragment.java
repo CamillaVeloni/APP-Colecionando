@@ -14,7 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,9 +25,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Activitys.MainActivity;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.R;
@@ -36,6 +39,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -60,7 +65,10 @@ public class ContaFragment extends Fragment {
     private CircleImageView imgPerfil;
     private EditText txtPerfilNome;
     private TextView txtPerfilEmail;
-
+    private ImageView imgSalvarNomeUsuario;
+    private Activity fragActivity;
+    private NavigationView navigationView;
+    private View headerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,30 +76,58 @@ public class ContaFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_conta, container, false);
 
-
+        fragActivity = this.getActivity();
         storageReference = ConfigFirebase.getFirebaseStorage();
+
         imgPerfil = view.findViewById(R.id.img_perfil);
         txtPerfilEmail = view.findViewById(R.id.textView_email);
         txtPerfilNome = view.findViewById(R.id.editText_nomePerfil);
+        imgSalvarNomeUsuario = view.findViewById(R.id.imgSalvarNome);
+
+        navigationView = fragActivity.findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+
+        FloatingActionButton floatingActionButton = ((MainActivity) getActivity()).getFloatingActionButton();
+        if (floatingActionButton != null) {
+            floatingActionButton.hide();
+        }
 
         // RECUPERANDO DADOS DO USUÁRIO DE DENTRO DO FIREBASE PARA SETAR NA IMAGE VIEW, NO EDIT TEXT E TEXT VIEW
         FirebaseUser usuario = UsuárioFirebase.getUsuarioAtual();
 
-        String nome = usuario.getDisplayName();
         // Atualizando e-mail e nome do perfil
         txtPerfilNome.setText(usuario.getDisplayName());
         txtPerfilEmail.setText(usuario.getEmail());
 
         // Atualizando foto perfil
         Uri url = usuario.getPhotoUrl(); // pegando url da foto perfil no firebase
-
         if (url != null) { // Verificar se tem uma foto de perfil no firebase
             Glide.with(ContaFragment.this).load(url).into(imgPerfil); // Carregar img do firebase p/ imgview
         }else{
             imgPerfil.setImageResource(R.drawable.imagem_perfil); // img padrão do perfil
         }
 
+        // MODIFICANDO O DISPLAY NAME DO USUÁRIO //
+        imgSalvarNomeUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!txtPerfilNome.getText().toString().isEmpty()){
+                    try {
+                        UsuárioFirebase.atualizarNomeUsuario(txtPerfilNome.getText().toString());
 
+                        TextView nome_nav = headerView.findViewById(R.id.txtNome_nav_header);
+                        nome_nav.setText(txtPerfilNome.getText().toString());
+
+                        Toast.makeText(fragActivity,"Nome do perfil atualizado com sucesso", Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else{
+                    Toast.makeText(getContext(), "Coloque um nome para o perfil", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // IMPORTANDO FOTO DO ARMAZENAMENTO E DE PERFIL //
         imgPerfil.setOnClickListener(new View.OnClickListener() {
@@ -131,53 +167,17 @@ public class ContaFragment extends Fragment {
         if(requestCode == REQUEST_CODE_IMAGE_GALLERY && resultCode == Activity.RESULT_OK){
 
             try {
-                Uri localImgArmazenada = data.getData(); // Recuperando o local da imagem selecionada
+                // Recuperando a img selecionada
+                Uri imgSelecionada = data.getData(); // caminho da img
                 Bitmap img = MediaStore.Images.Media.getBitmap(
-                        context.getContentResolver(), localImgArmazenada); // getContentResolver é um objeto responsavel por recuperar
-                                                                           // os conteúdos do app android
-                // Verificando se a imagem é diferente de nulo
-                if (img != null){
+                        context.getContentResolver(), imgSelecionada); // getContentResolver é um objeto responsavel por recuperar
+
+                if(img != null) {
                     imgPerfil.setImageBitmap(img);
+                    CircleImageView foto_nav = headerView.findViewById(R.id.image_nav_header);
+                    foto_nav.setImageBitmap(img);
 
-                    // Recuperar dados p/ passar pro firebase
-                    ByteArrayOutputStream byteArrayOutS = new ByteArrayOutputStream();
-                    img.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutS);
-                    byte[] dadosImagem = byteArrayOutS.toByteArray();
-
-                    // Salvando imagem no firebase
-                    String uidUsuario = UsuárioFirebase.getIdentificadorUsuario();
-                    StorageReference imgPerfilSalvar = storageReference
-                            .child("imagens")
-                            .child("perfil")
-                            .child(uidUsuario + ".jpeg");
-
-                    UploadTask upTask = imgPerfilSalvar.putBytes(dadosImagem);
-
-                    // Teste p/ verificar se funcionou ou não
-                    upTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) { // Caso não for feito o upload da img
-                            Toast.makeText(context,
-                                    "Erro ao fazer o upload da imagem", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) { // Caso for feito o upload da img
-                            Toast.makeText(context,
-                                    "Sucesso ao fazer o upload da imagem", Toast.LENGTH_SHORT).show();
-
-                            // ATUALIZANDO FOTO DE PERFIL DO USUÁRIO NO FIREBASE
-
-                            // Maneira para pegar a url do arquivo guardado no Storage do firebase
-                            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() { // O método getDownloadUril vai retornar um obj Uri
-                                @Override
-                                public void onSuccess(Uri url) { // O objt Uri vai ser passado por parametro no método onSuccess
-                                    UsuárioFirebase.atualizarFotoUsuario(url);
-                                }
-                            });
-                        }
-                    });
-
+                    UsuárioFirebase.atualizarFotoUsuario(imgSelecionada);
                 }
 
             } catch (IOException e) {
@@ -216,7 +216,7 @@ public class ContaFragment extends Fragment {
     }
 
 
-    // ALERTA QUANDO NÃO FOR ACEITADO O PERMISSÃO
+    // ALERTA QUANDO NÃO FOR ACEITADO A PERMISSÃO
     public void alertaPermissao(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Permissão Negada");

@@ -17,15 +17,14 @@
     <string name="navigation_drawer_close">Fechar barra de menu</string>
 
     <!-- Strings do NavigationView p2 - parte do navigation_header_main -->
-    <string name="nav_header_title">Nome</string>
-    <string name="nav_header_subtitle">email.exemplo@gmail.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_name">Nome</string>
+    <string name="nav_header_email">email.exemplo@gmail.com</string>
+    <string name="nav_header_photo">Foto Perfil</string>
 
     <!-- Strings do NavigationView p3 - parte das opções main_drawer -->
-    <string name="nav_colec">Coleções</string>
+    <string name="nav_colec">Galeria de Coleções</string>
     <string name="nav_mColec">Minha Coleção</string>
     <string name="nav_perfil">Minha Conta</string>
-    <string name="nav_config">Configuração</string>
     <string name="nav_comunic">Ajuda e Contato</string>
     <string name="nav_contato">Contato</string>
     <string name="nav_sobre">Sobre</string>
@@ -36,7 +35,38 @@
     <string name="action_editar">Editar perfil</string>
 
     <!-- Strings de fragment - Minha Conta -->
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="minhaConta_nome">Nome do usuário</string>
     <string name="minhaConta_email">E-mail do usuário</string>
+
+    <!-- Strings de Fragment - Minha Coleção -->
+    <string name="minhaColec_nome">Digite o nome do colecionável</string>
+    <string name="minhaColec_descr">Digite uma descrição/Informação geral</string>
+    <string name="minhaColec_compradoOnde">Aonde foi adquirido</string>
+    <string name="minhaColec_valor">Digite o valor</string>
+    <string name="minhaColec_etiqueta">Etiqueta Customizada</string>
+    <string name="minhaColec_categoria">Categoria</string>
+    <string name="minhaColec_adicionar">Adicionar</string>
+    <string name="minhaColec_adquiridoBool">Adquirido</string>
+    <string name="mColec_foto">Imagem</string>
+    <string name="minhaColec_publico">Público</string>
+
+    <!-- Strings de Categorias - Adicionar Categoria no Colecionável (Spinner) -->
+    <string-array name="minhaColec_categorias">
+        <item>Acessórios</item>
+        <item>Armas</item>
+        <item>Brinquedos</item>
+        <item>Cromos</item>
+        <item>Discos</item>
+        <item>Die-cast</item>
+        <item>Cartas colecionáveis</item>
+        <item>Latas e garrafas</item>
+        <item>Revistas em quadrinhos</item>
+        <item>Bonecas</item>
+        <item>Autografomania</item>
+        <item>Notafilia</item>
+        <item>Numismática</item>
+        <item>Filatelia</item>
+        <item>Cartofilia</item>
+        <item>Bibliofilia</item>
+    </string-array>
 </resources>

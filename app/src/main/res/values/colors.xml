@@ -3,6 +3,10 @@
     <color name="colorPrimary">#006699</color>
     <color name="colorPrimaryDark">#005580</color>
     <color name="colorAccent">#0088CC</color>
-    <color name="colorText">#ffffff</color>
+    <color name="colorText">#FFFFFF</color>
     <color name="cinza_color">#EEEEEE</color>
+
+    <color name="red_colorPrimary">#ff4651</color>
+    <color name="green_colorPrimary">#48ea8b</color>
+
 </resources>

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app.teste.colecionando">
-
     <!-- USES-FEATURE - Definir recursos que são necessários p/ o app funcione corretamente -->
-
-
     <!-- Read_EXTERNAL_STORAGE - Permite que o app possa ler o armazenamento externo (permissão perigosa) -->
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +15,12 @@
         <activity
             android:name=".Activitys.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activitys.CadastroColecaoActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activitys.MainActivity"></activity>
         <activity android:name=".Activitys.CadastroActivity" />
         <activity android:name=".Activitys.LoginActivity">
             <intent-filter>

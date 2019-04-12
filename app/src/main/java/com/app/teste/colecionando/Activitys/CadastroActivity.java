@@ -68,16 +68,13 @@ public class CadastroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) { // Com esse método é possivel verificar se foi
                                                                      // cadastrado o usuário
                 if (task.isSuccessful()){
+                    // ADICIONANDO UM NOME NO PERFIL DO USUÁRIO -- VALE RESSALTAR QUE É O DISPLAY NAME
+                    UsuárioFirebase.atualizarNomeUsuario(usuario.getNome());
 
-                    boolean addSucesso = addUsuarioData(usuario);
-                    if(addSucesso){
-                        Toast.makeText(getContext(),
-                                "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),
+                            "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+                    finish();
 
-                        // ADICIONANDO UM NOME NO PERFIL DO USUÁRIO -- VALE RESSALTAR QUE É O DISPLAY NAME
-                        UsuárioFirebase.atualizarNomeUsuario(usuario.getNome());
-                        finish();
-                    }
                 }else{
                     // TRATAMENTO DE EXCEÇÃO //
                     String exceção = "";
@@ -102,21 +99,6 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    public boolean addUsuarioData(Usuário usuario){
-        try {
-            referenciaDatabase = ConfigFirebase.getFirebaseDatabase(); // nó de usuários - 'equivale' a tabela
-            referenciaDatabase.child("usuarios").child(mAuth.getCurrentUser().getUid()).setValue(usuario); // gerar chave automaticamente e passar usuário p banco
-
-            return true;
-
-        }catch (Exception e){
-            Toast.makeText(getContext(),
-                    "Não foi possível cadastrar o usuário", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-            return false;
-        }
     }
 
     private Context getContext() { // RETORNAR CONTEXTO DA TELA
