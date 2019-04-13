@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activitys.CadastroActivity"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorText"
+    tools:context=".Activitys.CadastroActivity">
 
     <ImageView
         android:id="@+id/logoColecionando2"
@@ -19,74 +19,83 @@
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/logo_dif" />
 
-    <android.support.design.widget.TextInputLayout
+    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
         android:id="@+id/textInputLayout9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:helperText=" "
+        app:iconSignifier="@drawable/ic_pessoa_24dp"
+        app:labelText="@string/digite_nome"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoColecionando2">
 
-        <android.support.design.widget.TextInputEditText
+        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
             android:id="@+id/cadastroNome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/digite_nome" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content" />
+    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
-    <android.support.design.widget.TextInputLayout
+    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
         android:id="@+id/textInputLayout10"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:helperText=" "
+        app:iconSignifier="@drawable/ic_contato_24dp"
+        app:labelText="@string/digite_email"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
 
-        <android.support.design.widget.TextInputEditText
+        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
             android:id="@+id/cadastroEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/digite_email"
             android:inputType="textEmailAddress" />
-    </android.support.design.widget.TextInputLayout>
+    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
-    <android.support.design.widget.TextInputLayout
+    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
         android:id="@+id/textInputLayout11"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:helperText=" "
+        app:iconSignifier="@drawable/ic_vpn_key_24dp"
+        app:labelText="@string/digite_senha"
         app:layout_constraintBottom_toTopOf="@+id/btnCadastro"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
 
-        <android.support.design.widget.TextInputEditText
+        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
             android:id="@+id/cadastroSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/digite_senha"
             android:inputType="textPassword" />
-    </android.support.design.widget.TextInputLayout>
+    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
     <Button
         android:id="@+id/btnCadastro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:background="@color/colorPrimaryDark"
         android:text="@string/cadastro_cad"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout11" />
 

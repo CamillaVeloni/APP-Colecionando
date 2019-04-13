@@ -187,14 +187,14 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
                     Colecionável colecionávelAdd = new Colecionável(txtNome.getText().toString(), txtDesc.getText().toString(),
                             txtValor.getText().toString(), spinnerCategorias.getSelectedItem().toString(),
-                            checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido, imagens
+                            checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido
 
-                    if(!txtEtiq.getText().toString().isEmpty()){
+                    if(!txtEtiq.getText().toString().isEmpty()){ // adicionando etiqueta
                         colecionávelAdd.setEtiquetaCustomizada(txtEtiq.getText().toString());
 
-                    }if(checkAdq.isChecked()){
+                    }if(checkAdq.isChecked()){ // adicionando local compra
                         colecionávelAdd.setLocalCompra(txtComp.getText().toString());
-                        if(switchPublico.isChecked()){
+                        if(switchPublico.isChecked()){ // verificando se colecionável é publico ou particular
                             colecionávelAdd.setBoolPublico(true);
                         }
                     }

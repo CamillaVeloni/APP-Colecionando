@@ -37,6 +37,14 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.github.HITGIF:TextFieldBoxes:1.4.4'
+
+    // DEPENDÊNCIA DO PICASSO
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // DEPENDÊNCIA RECYCLER VIEW ADAPTER HELPER
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
     // DEPENDÊNCIA PROGRESS - LOADING //
     implementation 'com.jgb.lordsaac.igb.progresslitieigb:progresslottieigb:0.0.2'

@@ -4,11 +4,15 @@ import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.google.firebase.database.DatabaseReference;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Colecionável {
 
-    private String idColecionavel;
+    private String idColecionavel, data;
     private String nome, descrição;
     private String valor, etiquetaCustomizada;
     private String categoria, localCompra;
@@ -36,11 +40,25 @@ public class Colecionável {
                 child("minha_coleção");
         setIdColecionavel(dataRef.push().getKey()); // Automaticamente é gerado o id da coleção (id_colecionável)
 
+        Locale local = new Locale("pt", "BR");
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", local);
+        String data = dateFormat.format(date);
+        this.data = data;
+
         this.nome = nome;
         this.descrição = descrição;
         this.valor = valor;
         this.categoria = categoria;
         this.boolAdquirido = boolAdquirido;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getIdColecionavel() {
@@ -126,6 +144,7 @@ public class Colecionável {
 
     // ARRUMAR PARTE DE MINHA_COLEÇÃO. 1- ABA PARA COLECIONÁVEL JÁ ADQUIRIDO. 2 - ABA PARA COLECIONÁVEL AINDA NÃO ADQUIRIDO
     public void salvarColecionável(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE = NA 'MINHA_COLEÇÃO'
+
         DatabaseReference databaseReference = ConfigFirebase.getFirebaseDatabase().
                 child("minha_coleção");
         databaseReference.child(UsuárioFirebase.getIdentificadorUsuario()) // id_usuário

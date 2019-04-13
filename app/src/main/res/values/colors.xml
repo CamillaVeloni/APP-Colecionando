@@ -5,8 +5,12 @@
     <color name="colorAccent">#0088CC</color>
     <color name="colorText">#FFFFFF</color>
     <color name="cinza_color">#EEEEEE</color>
+    <color name="hard_color">#48495f</color>
+    <color name="bg">#F0F0F0</color>
 
     <color name="red_colorPrimary">#ff4651</color>
     <color name="green_colorPrimary">#48ea8b</color>
+
+
 
 </resources>

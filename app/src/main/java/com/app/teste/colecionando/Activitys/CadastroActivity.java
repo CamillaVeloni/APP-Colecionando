@@ -23,10 +23,13 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
+import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
+
 public class CadastroActivity extends AppCompatActivity {
 
     private Button btnCadastro;
-    private TextInputEditText cadastroNome, cadastroEmail, cadastroSenha;
+    private ExtendedEditText cadastroNome, cadastroEmail, cadastroSenha;
     private FirebaseAuth mAuth;
     private DatabaseReference referenciaDatabase;
     private Usuário usuario;
