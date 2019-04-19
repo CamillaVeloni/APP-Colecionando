@@ -22,12 +22,13 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
+import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
+
 public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
-    TextInputEditText loginSenha, loginEmail;
-    TextView txtCadastrar;
-    Button btnEntrar;
+    ExtendedEditText loginSenha, loginEmail;
+    Button btnEntrar, cadastrarUp;
 
     @Override
     protected void onStart() {
@@ -44,13 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginEmail = findViewById(R.id.loginEmail);
-        loginSenha = findViewById(R.id.loginSenha);
-        txtCadastrar = findViewById(R.id.txtCadastrar);
-        btnEntrar = findViewById(R.id.btnEntrar);
+        loginEmail = findViewById(R.id.txtEmail_login);
+        loginSenha = findViewById(R.id.txtSenha_login);
+        cadastrarUp = findViewById(R.id.btnCadastrarUp);
+        btnEntrar = findViewById(R.id.btnLogin);
         mAuth = ConfigFirebase.getFirebaseAuth();
 
-        txtCadastrar.setOnClickListener(new View.OnClickListener(){
+        cadastrarUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) { // ENTRAR NA TELA DE CADASTRO //
                 Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);

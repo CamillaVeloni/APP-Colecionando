@@ -23,7 +23,7 @@
     <FrameLayout
         android:id="@+id/FrameLayoutContainer"
         android:layout_width="match_parent"
-        android:layout_height="705dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"></FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -33,6 +33,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="visible"
+        app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_add_colec_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

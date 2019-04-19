@@ -7,10 +7,15 @@
     <!-- Strings Cadastro & Autenticação -->
     <string name="digite_email">Digite seu e-mail</string>
     <string name="digite_senha">Digite sua senha</string>
-    <string name="cadastrar_usuario">Não possui uma conta? Cadastre-se já!</string>
+    <string name="cadastrar_usuario">Ainda não possui uma conta?</string>
+    <string name="login_up">Já possui uma conta?</string>
+    <string name="cadastro_up">Cadastre-se já</string>
+    <string name="login">Login</string>
     <string name="digite_nome">Digite seu nome</string>
-    <string name="login_entrar">ENTRAR</string>
-    <string name="cadastro_cad">CADASTRAR</string>
+    <string name="login_entrar">Entrar</string>
+    <string name="cadastrar_cad">Cadastrar</string>
+    <string name="cadastro_cad">Cadastro</string>
+    <string name="login_lembrar">Se lembrar de mim</string>
 
     <!-- Strings do NavigationView p1-->
     <string name="navigation_drawer_open">Abrir barra de menu</string>
@@ -38,7 +43,7 @@
     <string name="minhaConta_nome">Nome do usuário</string>
     <string name="minhaConta_email">E-mail do usuário</string>
 
-    <!-- Strings de Fragment - Minha Coleção -->
+    <!-- Strings de Fragment - Minha Coleção & Cadastro Colecionável -->
     <string name="minhaColec_nome">Digite o nome do colecionável</string>
     <string name="minhaColec_descr">Digite uma descrição/Informação geral</string>
     <string name="minhaColec_compradoOnde">Aonde foi adquirido</string>
@@ -49,6 +54,10 @@
     <string name="minhaColec_adquiridoBool">Adquirido</string>
     <string name="mColec_foto">Imagem</string>
     <string name="minhaColec_publico">Público</string>
+    <string name="mColec_nomeLista">Nome do colecionável</string>
+    <string name="mColec_descLista">Aqui vai a descrição do colecionável</string>
+    <string name="mColec_dataLista">01/01/19</string>
+    <string name="mColec_etiqLista">Etiqueta</string>
 
     <!-- Strings de Categorias - Adicionar Categoria no Colecionável (Spinner) -->
     <string-array name="minhaColec_categorias">

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cinza_color"
     tools:context=".Fragments.ContaFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,7 +12,7 @@
         android:layout_height="230dp"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="32dp"
-        android:src="@drawable/imagem_perfil"
+        android:src="@drawable/perfil_padrao"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

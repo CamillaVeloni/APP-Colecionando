@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
@@ -187,14 +188,14 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
                     Colecionável colecionávelAdd = new Colecionável(txtNome.getText().toString(), txtDesc.getText().toString(),
                             txtValor.getText().toString(), spinnerCategorias.getSelectedItem().toString(),
-                            checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido, imagens
+                            checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido
 
-                    if(!txtEtiq.getText().toString().isEmpty()){
+                    if(!txtEtiq.getText().toString().isEmpty()){ // adicionando etiqueta
                         colecionávelAdd.setEtiquetaCustomizada(txtEtiq.getText().toString());
 
-                    }if(checkAdq.isChecked()){
+                    }if(checkAdq.isChecked()){ // adicionando local compra
                         colecionávelAdd.setLocalCompra(txtComp.getText().toString());
-                        if(switchPublico.isChecked()){
+                        if(switchPublico.isChecked()){ // verificando se colecionável é publico ou particular
                             colecionávelAdd.setBoolPublico(true);
                         }
                     }
@@ -232,9 +233,9 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
     private void salvarFotosFirebase(String imgStringUrl, final int qntdFotos, int fotoAtual){
         StorageReference imagemColecionavel = storage.child("imagens")
-                .child("coleções")
-                .child(colecionável.getIdColecionavel()) // id_colecionável
-                .child("imagem" + fotoAtual);
+                .child("colecionaveis")
+                .child(colecionável.getIdColecionavel()) // id do colecionável
+                .child("imagem" + fotoAtual); // imagem + index da lista
 
         // Upload da img transformando a string_url em uri
         UploadTask task = imagemColecionavel.putFile(Uri.parse(imgStringUrl));

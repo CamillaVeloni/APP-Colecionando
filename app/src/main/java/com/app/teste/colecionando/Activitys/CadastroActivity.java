@@ -23,10 +23,13 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
+import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
+
 public class CadastroActivity extends AppCompatActivity {
 
     private Button btnCadastro;
-    private TextInputEditText cadastroNome, cadastroEmail, cadastroSenha;
+    private ExtendedEditText cadastroNome, cadastroEmail, cadastroSenha;
     private FirebaseAuth mAuth;
     private DatabaseReference referenciaDatabase;
     private Usuário usuario;
@@ -36,10 +39,10 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        btnCadastro = findViewById(R.id.btnCadastro);
-        cadastroNome = findViewById(R.id.cadastroNome);
-        cadastroEmail = findViewById(R.id.cadastroEmail);
-        cadastroSenha = findViewById(R.id.cadastroSenha);
+        btnCadastro = findViewById(R.id.btnCadastrar);
+        cadastroNome = findViewById(R.id.txtNome_cadastro);
+        cadastroEmail = findViewById(R.id.txtEmail_cadastro);
+        cadastroSenha = findViewById(R.id.txtSenha_cadastro);
         usuario = new Usuário();
 
         btnCadastro.setOnClickListener(new View.OnClickListener() {

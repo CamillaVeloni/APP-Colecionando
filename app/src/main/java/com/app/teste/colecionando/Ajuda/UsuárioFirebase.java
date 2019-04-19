@@ -1,14 +1,10 @@
 package com.app.teste.colecionando.Ajuda;
 
-import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.app.teste.colecionando.Activitys.CadastroActivity;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
-import com.app.teste.colecionando.Fragments.ContaFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +52,6 @@ public class UsuárioFirebase {
 
     }
     public static boolean atualizarNomeUsuario(String nome){
-
         try {
             FirebaseUser usuario = getUsuarioAtual();
             UserProfileChangeRequest profileChangeRequestName = new UserProfileChangeRequest.Builder().setDisplayName(nome).build();
