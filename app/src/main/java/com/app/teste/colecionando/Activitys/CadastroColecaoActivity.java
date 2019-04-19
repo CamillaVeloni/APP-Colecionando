@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
@@ -232,9 +233,9 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
     private void salvarFotosFirebase(String imgStringUrl, final int qntdFotos, int fotoAtual){
         StorageReference imagemColecionavel = storage.child("imagens")
-                .child("coleções")
-                .child(colecionável.getIdColecionavel()) // id_colecionável
-                .child("imagem" + fotoAtual);
+                .child("colecionaveis")
+                .child(colecionável.getIdColecionavel()) // id do colecionável
+                .child("imagem" + fotoAtual); // imagem + index da lista
 
         // Upload da img transformando a string_url em uri
         UploadTask task = imagemColecionavel.putFile(Uri.parse(imgStringUrl));

@@ -104,7 +104,7 @@ public class ContaFragment extends Fragment {
         if (url != null) { // Verificar se tem uma foto de perfil no firebase
             Glide.with(ContaFragment.this).load(url).into(imgPerfil); // Carregar img do firebase p/ imgview
         }else{
-            imgPerfil.setImageResource(R.drawable.imagem_perfil); // img padrão do perfil
+            imgPerfil.setImageResource(R.drawable.perfil_padrao); // img padrão do perfil
         }
 
         // MODIFICANDO O DISPLAY NAME DO USUÁRIO //
@@ -240,4 +240,5 @@ public class ContaFragment extends Fragment {
         this.context = context;
         super.onAttach(context);
     }
+
 }

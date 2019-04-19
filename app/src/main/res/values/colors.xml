@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#006699</color>
-    <color name="colorPrimaryDark">#005580</color>
-    <color name="colorAccent">#0088CC</color>
+    <color name="colorPrimary">#497285</color>
+    <color name="colorPrimaryDark">#385766</color>
+    <color name="colorAccent">#D4D2D5</color>
     <color name="colorText">#FFFFFF</color>
-    <color name="cinza_color">#EEEEEE</color>
+    <color name="cinza_color">#9E9E9E</color>
     <color name="hard_color">#48495f</color>
     <color name="bg">#F0F0F0</color>
 
-    <color name="red_colorPrimary">#ff4651</color>
+    <color name="red_colorPrimary">#EE1C28</color>
     <color name="green_colorPrimary">#48ea8b</color>
 
 

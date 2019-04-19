@@ -1,20 +1,17 @@
 package com.app.teste.colecionando.Adapter;
 
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Random;
 
 
-public class AdapterRecyclerView extends BaseQuickAdapter<Colecionável, BaseViewHolder> {
+public class AdapterRecyclerView extends BaseItemDraggableAdapter<Colecionável, BaseViewHolder> {
 
     public AdapterRecyclerView(List<Colecionável> data){
         super(R.layout.layout_item_colecionavel, data);
@@ -35,8 +32,6 @@ public class AdapterRecyclerView extends BaseQuickAdapter<Colecionável, BaseVie
         List<String> urlFotos = item.getImagens();
         String url = urlFotos.get(0);
         Picasso.get().load(url).into((ImageView) helper.getView(R.id.imgColecionavel));
-
-
+        
     }
-
 }

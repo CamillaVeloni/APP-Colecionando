@@ -1,8 +1,14 @@
 package com.app.teste.colecionando.Modelos;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,17 +30,6 @@ public class Colecionável {
 
     }
 
-    public Colecionável(String nome, String descrição, String valor, String etiquetaCustomizada, String categoria, String localCompra, boolean boolAdquirido, List<String> imagens) {
-        this.nome = nome;
-        this.descrição = descrição;
-        this.valor = valor;
-        this.etiquetaCustomizada = etiquetaCustomizada;
-        this.categoria = categoria;
-        this.localCompra = localCompra;
-        this.boolAdquirido = boolAdquirido;
-        this.imagens = imagens;
-    }
-
     public Colecionável(String nome, String descrição, String valor, String categoria, boolean boolAdquirido) {
         DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase().
                 child("minha_coleção");
@@ -43,9 +38,8 @@ public class Colecionável {
         Locale local = new Locale("pt", "BR");
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", local);
-        String data = dateFormat.format(date);
-        this.data = data;
 
+        this.data = dateFormat.format(date);
         this.nome = nome;
         this.descrição = descrição;
         this.valor = valor;
@@ -145,10 +139,10 @@ public class Colecionável {
     // ARRUMAR PARTE DE MINHA_COLEÇÃO. 1- ABA PARA COLECIONÁVEL JÁ ADQUIRIDO. 2 - ABA PARA COLECIONÁVEL AINDA NÃO ADQUIRIDO
     public void salvarColecionável(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE = NA 'MINHA_COLEÇÃO'
 
-        DatabaseReference databaseReference = ConfigFirebase.getFirebaseDatabase().
-                child("minha_coleção");
-        databaseReference.child(UsuárioFirebase.getIdentificadorUsuario()) // id_usuário
-                .child(getIdColecionavel()) // id_colecionável
+        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+                .child("minha_coleção");
+        dataRef.child(UsuárioFirebase.getIdentificadorUsuario()) // id_usuário
+                .child(this.idColecionavel) // id_colecionável
                 .setValue(this); // setando dados
 
         if(this.boolPublico){
@@ -157,12 +151,75 @@ public class Colecionável {
     }
 
     private void salvarColecionávelPublico(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE = NA PARTE PUBLICA -- 'GALERIA_DE_COLECIONAVEIS'
-        DatabaseReference databaseReference = ConfigFirebase.getFirebaseDatabase().
-                child("galeria_coleções");
-        databaseReference.child(getCategoria()) // id_usuário
-                .child(getIdColecionavel()) // id_colecionável
+        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+                .child("galeria_coleções");
+        dataRef.child(this.categoria) // id_usuário
+                .child(this.idColecionavel) // id_colecionável
                 .setValue(this); // setando dados
 
     }
+
+    public void removerColecionável(){ // REMOVENDO COLECIONÁVEL DO DATABASE DO FIREBASE = NA MINHA_COLEÇÃO
+        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+                .child("minha_coleção")
+                .child(UsuárioFirebase.getIdentificadorUsuario())
+                .child(this.idColecionavel);
+
+        dataRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("Remover", "onSuccess: Sucesso em remover do Database Minha_Coleção");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Remover", "On Failure: Não foi possivel remover do Database Minha_Coleção" +
+                        e.getMessage());
+            }
+        });
+
+        if(this.boolPublico){
+            removerColecionávelPublico(); // DELETAR COLECIONÁVEL DO DATABASE DENTRO DE GALERIA_COLEÇÕES
+        }
+
+        for (int i  = 0; i < this.imagens.size(); i++){ // DELETAR IMAGENS DENTRO DO STORAGE
+            StorageReference photoRef = ConfigFirebase.getFirebaseStorage()
+                    .getStorage().getReferenceFromUrl(imagens.get(i));
+            photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("Remover", "onSuccess: Sucesso em remover a img do Storage pelo URL");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("Remover", "onFailure: Não foi possível deletar a img do Storage pelo URL" +
+                            e.getMessage());
+                }
+            });
+        }
+    }
+
+    private void removerColecionávelPublico(){
+
+        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+                .child("galeria_coleções")
+                .child(this.categoria)
+                .child(this.idColecionavel);
+        dataRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("Remover", "onSuccess: Sucesso em remover do Database Galeria_Coleções");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Remover", "On Failure: Não foi possivel remover do Galeria_Coleções" +
+                        e.getMessage());
+            }
+        });
+
+    }
+
 
 }

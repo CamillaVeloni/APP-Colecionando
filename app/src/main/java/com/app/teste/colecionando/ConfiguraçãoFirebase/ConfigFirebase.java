@@ -37,11 +37,9 @@ public class ConfigFirebase {
         if (storage == null) { // se for igual a nulo quer dizer que é preciso criar uma
             // instancia do firebaseAuth
             storage = FirebaseStorage.getInstance().getReference(); // colocando o objeto 'mAuth' para poder gerenciar
-            // os usuários
+                                                                    // os usuários
         }
         return storage;
     }
-
-
 
 }

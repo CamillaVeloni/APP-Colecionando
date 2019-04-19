@@ -31,7 +31,7 @@
                     android:layout_height="160dp"
                     android:layout_weight="1"
                     android:contentDescription="@string/mColec_foto"
-                    app:srcCompat="@drawable/imgpadrao_colec1" />
+                    app:srcCompat="@drawable/imgpadrao_colec" />
 
                 <ImageView
                     android:id="@+id/cadastroColec_img2"
@@ -39,7 +39,7 @@
                     android:layout_height="160dp"
                     android:layout_weight="1"
                     android:contentDescription="@string/mColec_foto"
-                    app:srcCompat="@drawable/imgpadrao_colec1" />
+                    app:srcCompat="@drawable/imgpadrao_colec" />
 
                 <ImageView
                     android:id="@+id/cadastroColec_img3"
@@ -47,7 +47,7 @@
                     android:layout_height="160dp"
                     android:layout_weight="1"
                     android:contentDescription="@string/mColec_foto"
-                    app:srcCompat="@drawable/imgpadrao_colec1" />
+                    app:srcCompat="@drawable/imgpadrao_colec" />
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -70,6 +70,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/edit_text_design"
             android:ems="10"
+            android:maxLines="1"
             android:hint="@string/minhaColec_nome"
             android:inputType="textPersonName"
             android:padding="10dp" />
@@ -86,7 +87,8 @@
             android:hint="@string/minhaColec_descr"
             android:inputType="text"
             android:padding="10dp"
-            android:singleLine="false"
+            android:maxLines="4"
+            android:lines="3"
             android:textAlignment="textStart" />
 
         <com.blackcat.currencyedittext.CurrencyEditText

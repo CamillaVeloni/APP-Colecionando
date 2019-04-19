@@ -40,6 +40,12 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.github.HITGIF:TextFieldBoxes:1.4.4'
 
+    // DEPENDÊNCIA SNACK BAR - Choco Bar
+    implementation 'com.github.Pradyuman7:ChocoBar:V1.0'
+
+    // DEPENDÊNCIA ALERT DIALOG - cfalertdialog
+    implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
+
     // DEPENDÊNCIA DO PICASSO
     implementation 'com.squareup.picasso:picasso:2.71828'
 

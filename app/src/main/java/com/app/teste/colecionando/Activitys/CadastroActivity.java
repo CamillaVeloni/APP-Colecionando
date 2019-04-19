@@ -39,10 +39,10 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        btnCadastro = findViewById(R.id.btnCadastro);
-        cadastroNome = findViewById(R.id.cadastroNome);
-        cadastroEmail = findViewById(R.id.cadastroEmail);
-        cadastroSenha = findViewById(R.id.cadastroSenha);
+        btnCadastro = findViewById(R.id.btnCadastrar);
+        cadastroNome = findViewById(R.id.txtNome_cadastro);
+        cadastroEmail = findViewById(R.id.txtEmail_cadastro);
+        cadastroSenha = findViewById(R.id.txtSenha_cadastro);
         usuario = new Usuário();
 
         btnCadastro.setOnClickListener(new View.OnClickListener() {
