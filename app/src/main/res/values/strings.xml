@@ -2,7 +2,8 @@
 
     <!-- Nome do app -->
     <string name="app_name">Colecionando</string>
-    <string name="title_activity_main">Colecionando</string>
+    <string name="title_activity_main"></string>
+    <string name="title_cadastro_colec">Adicionando na Coleção</string>
 
     <!-- Strings Cadastro & Autenticação -->
     <string name="digite_email">Digite seu e-mail</string>
@@ -56,7 +57,7 @@
     <string name="minhaColec_publico">Público</string>
     <string name="mColec_nomeLista">Nome do colecionável</string>
     <string name="mColec_descLista">Aqui vai a descrição do colecionável</string>
-    <string name="mColec_dataLista">01/01/19</string>
+    <string name="mColec_dataLista">01/01/2019</string>
     <string name="mColec_etiqLista">Etiqueta</string>
 
     <!-- Strings de Categorias - Adicionar Categoria no Colecionável (Spinner) -->

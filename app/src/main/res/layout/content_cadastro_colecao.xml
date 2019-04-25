@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <HorizontalScrollView
@@ -78,17 +78,17 @@
         <EditText
             android:id="@+id/cadastroColec_desc"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/edit_text_design"
             android:ems="10"
             android:hint="@string/minhaColec_descr"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:lines="4"
             android:padding="10dp"
-            android:maxLines="4"
-            android:lines="3"
+            android:scrollHorizontally="false"
             android:textAlignment="textStart" />
 
         <com.blackcat.currencyedittext.CurrencyEditText
@@ -172,4 +172,4 @@
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</ScrollView>

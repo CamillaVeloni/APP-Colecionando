@@ -29,11 +29,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Ajuda.TratamentoDeFotos;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
+import com.app.teste.colecionando.Fragments.ContaFragment;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.bumptech.glide.Glide;
 import com.forms.sti.progresslitieigb.ProgressLoadingJIGB;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -261,6 +264,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Exception e) {
                 toastPadrao("Erro ao dar upload na imagem.");
+                ProgressLoadingJIGB.finishLoadingJIGB(getContext()); // Retirando o progress loading
                 Log.d("ERRO IMG", "Falha ao fazer upload: " + e.getMessage());
             }
         });
@@ -290,15 +294,16 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
                 if(img != null){
                     int num = 0;
+
                     // Mostrando foto em umas das 3 imgViews
                     if(requestCode == 1){
-                        img1.setImageBitmap(img);
+                        Glide.with(CadastroColecaoActivity.this).load(imgUrl).into(img1);
                         imgUrl1 = localImg;
                     }else if(requestCode == 2){
-                        img2.setImageBitmap(img);
+                        Glide.with(CadastroColecaoActivity.this).load(imgUrl).into(img2);
                         imgUrl2 = localImg;
                     }else if(requestCode == 3){
-                        img3.setImageBitmap(img);
+                        Glide.with(CadastroColecaoActivity.this).load(imgUrl).into(img3);
                         imgUrl3 = localImg;
                     }
                 }

@@ -25,6 +25,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +33,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.app.teste.colecionando.Activitys.CadastroColecaoActivity;
+import com.app.teste.colecionando.Activitys.ColecionavelActivity;
 import com.app.teste.colecionando.Activitys.MainActivity;
 import com.app.teste.colecionando.Adapter.AdapterRecyclerView;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
@@ -182,7 +185,7 @@ public class MinhaColecaoFragment extends Fragment {
         };
 
         adapter = new AdapterRecyclerView(coleção);
-        int mFirstPageItemCount = 4;
+        int mFirstPageItemCount = 3;
         adapter.setNotDoAnimationCount(mFirstPageItemCount);
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT); // Animação quando estiver 'descendo' pelo recyclerView
 
@@ -195,6 +198,19 @@ public class MinhaColecaoFragment extends Fragment {
         adapter.setOnItemSwipeListener(onItemSwipeListener); // setando um listener para o item
 
         recyclerMinhaColeção.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Log.d("Click", "onItemClick");
+                Colecionável colecSelecionado = coleção.get(position);
+                Intent intent = new Intent(fragActivity, ColecionavelActivity.class);
+                intent.putExtra("colecSelecionado", colecSelecionado);
+                startActivity(intent);
+
+
+            }
+        });
     }
 
     public void inicializarData(){

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical"
+    tools:context=".Activitys.ColecionavelActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.synnapps.carouselview.CarouselView
+            android:id="@+id/carouselView"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            app:fillColor="#FFFFFFFF"
+            app:pageColor="#00000000"
+            app:radius="6dp"
+            app:slideInterval="4000"
+            app:strokeColor="#FF777777"
+            app:strokeWidth="1dp">
+
+        </com.synnapps.carouselview.CarouselView>
+
+        <TextView
+            android:id="@+id/colecSelecionado_nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:text="Nome Colecionavel"
+            android:textAppearance="@style/txtTitulo_Detalhe" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="6dp"
+            app:srcCompat="@drawable/folder" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_categ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Categoria Colecionavel"
+            android:textAlignment="center"
+            android:textAppearance="@style/txtResto_Detalhe" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:inputType='textMultiLine'
+            android:text="Descrição"
+            android:textAppearance="@style/txtResto_Layout"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="10dp"
+            android:inputType='textMultiLine'
+            android:text="Aqui é a descrição mesmo do colecionável"
+            android:textAppearance="@style/txtResto_Detalhe" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:inputType='textMultiLine'
+            android:text="Valor"
+            android:textAppearance="@style/txtResto_Layout"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_valor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="10dp"
+            android:inputType='textMultiLine'
+            android:text="Valor do Colecionavel"
+            android:textAppearance="@style/txtResto_Detalhe" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_localLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:inputType='textMultiLine'
+            android:text="Local da compra"
+            android:textAppearance="@style/txtResto_Layout"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_comp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="10dp"
+            android:inputType='textMultiLine'
+            android:text="Local da compra do Colecionavel"
+            android:textAppearance="@style/txtResto_Detalhe" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_etiqLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:inputType='textMultiLine'
+            android:text="Etiqueta personalizada"
+            android:textAppearance="@style/txtResto_Layout"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_etiq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="10dp"
+            android:inputType='textMultiLine'
+            android:text="Etiqueta Personalizada"
+            android:textAppearance="@style/txtResto_Detalhe" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/colecSelecionado_adq"
+                style="@style/txtResto_Detalhe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/minhaColec_adquiridoBool"
+                android:textAlignment="center" />
+
+            <Switch
+                android:id="@+id/colecSelecionado_public"
+                style="@style/txtResto_Detalhe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/minhaColec_publico"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -12,15 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activitys.ColecionavelActivity"/>
         <activity
             android:name=".Activitys.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activitys.CadastroColecaoActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activitys.MainActivity"></activity>
+            android:label="@string/title_cadastro_colec"
+            android:parentActivityName=".Activitys.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activitys.CadastroActivity" />
         <activity android:name=".Activitys.LoginActivity">
             <intent-filter>

@@ -57,5 +57,8 @@ dependencies {
 
     // DEPENDÊNCIA MASCARA //
     implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
+
+    // DEPENDÊNCIA CAROUSEL //
+    implementation 'com.synnapps:carouselview:0.1.5'
 }
 apply plugin: 'com.google.gms.google-services'

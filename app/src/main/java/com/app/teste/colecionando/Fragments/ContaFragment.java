@@ -30,19 +30,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.teste.colecionando.Activitys.MainActivity;
+import com.app.teste.colecionando.Ajuda.TratamentoDeFotos;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.R;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -173,9 +168,12 @@ public class ContaFragment extends Fragment {
                         context.getContentResolver(), imgSelecionada); // getContentResolver é um objeto responsavel por recuperar
 
                 if(img != null) {
-                    imgPerfil.setImageBitmap(img);
+                    String caminho = TratamentoDeFotos.tratarCaminhoFoto(context, imgSelecionada);
+                    Bitmap imgRotacionada = TratamentoDeFotos.tratarRotação(img, caminho);
+
+                    imgPerfil.setImageBitmap(imgRotacionada);
                     CircleImageView foto_nav = headerView.findViewById(R.id.image_nav_header);
-                    foto_nav.setImageBitmap(img);
+                    foto_nav.setImageBitmap(imgRotacionada);
 
                     UsuárioFirebase.atualizarFotoUsuario(imgSelecionada);
                 }
@@ -186,13 +184,6 @@ public class ContaFragment extends Fragment {
 
         }
     }
-
-
-    // MÉTODO PARA ATUALIZAR FOTO DE PERFIL DO USUÁRIO DENTRO DO FIREBASE //
-    /*public void atualizarPerfilFotoUsuario(Uri url){
-        UsuárioFirebase.atualizarFotoUsuario(url);
-    }*/
-
 
     // ARRUMANDO O MENU PARA O FRAGMENT 'MINHA CONTA' //
     @Override

@@ -1,17 +1,19 @@
 package com.app.teste.colecionando.Adapter;
 
+import android.net.Uri;
 import android.widget.ImageView;
 
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
 public class AdapterRecyclerView extends BaseItemDraggableAdapter<Colecionável, BaseViewHolder> {
+
 
     public AdapterRecyclerView(List<Colecionável> data){
         super(R.layout.layout_item_colecionavel, data);
@@ -21,17 +23,21 @@ public class AdapterRecyclerView extends BaseItemDraggableAdapter<Colecionável,
     protected void convert(BaseViewHolder helper, Colecionável item) {
         helper.setText(R.id.txtNome, item.getNome());
         helper.setText(R.id.txtDescrição, item.getDescrição());
-        String dataEtiq = "";
-        if(item.getEtiquetaCustomizada() != null){
-            dataEtiq = "#" + item.getEtiquetaCustomizada() + " - ";
-        }
-        dataEtiq += item.getData();
-        helper.setText(R.id.txtData, dataEtiq);
+        helper.setText(R.id.txtData, item.getData());
 
-        // Pegar a primeira imagem da lista -- editar depois para pegar uma foto aleatoriamente (??)
+
+        // Pegar a primeira imagem da lista
         List<String> urlFotos = item.getImagens();
-        String url = urlFotos.get(0);
-        Picasso.get().load(url).into((ImageView) helper.getView(R.id.imgColecionavel));
-        
+        String urlString = urlFotos.get(0);
+        Uri url = Uri.parse(urlString);
+
+        Glide
+                .with(this.mContext)
+                .load(url)
+                .into((ImageView) helper.getView(R.id.imgColecionavel));
+
     }
+
+
 }
+
