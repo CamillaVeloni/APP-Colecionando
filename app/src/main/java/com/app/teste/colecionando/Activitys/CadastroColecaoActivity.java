@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,15 +25,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.app.teste.colecionando.Ajuda.TratamentoDeFotos;
-import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
-import com.app.teste.colecionando.Fragments.ContaFragment;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
 import com.blackcat.currencyedittext.CurrencyEditText;
@@ -44,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -53,7 +53,10 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
     private StorageReference storage;
     private Colecionável colecionável;
+    public static final int RESULT_CODE = 1;
+    private Colecionável colecEdit;
     private Button btnAdd;
+    private ImageButton btnDel01, btnDel02, btnDel03;
     private EditText txtNome, txtDesc, txtComp, txtEtiq;
     private ImageView img1, img2, img3;
     private CurrencyEditText txtValor;
@@ -101,8 +104,11 @@ public class CadastroColecaoActivity extends AppCompatActivity
         txtValor = findViewById(R.id.cadastroColec_valor);
         spinnerCategorias = findViewById(R.id.cadastroColec_spCateg);
         checkAdq = findViewById(R.id.cadastroColec_checkAd);
-        btnAdd = findViewById(R.id.cadastroColec_btnAdd);
         switchPublico = findViewById(R.id.switchPublico);
+        btnAdd = findViewById(R.id.cadastroColec_btnAdd);
+        btnDel01 = findViewById(R.id.cadastroColec_btnDel01);
+        btnDel02 = findViewById(R.id.cadastroColec_btnDel02);
+        btnDel03 = findViewById(R.id.cadastroColec_btnDel03);
 
         imgUrl1 = "";
         imgUrl2 = "";
@@ -133,10 +139,23 @@ public class CadastroColecaoActivity extends AppCompatActivity
             }
         });
 
-        img1.setOnClickListener(this); // SETANDO CLICK LISTENERS DENTRO DA CLASSE
-        img2.setOnClickListener(this);
-        img3.setOnClickListener(this);
-        btnAdd.setOnClickListener(this);
+        // SETANDO INSTÂNCIA E AJEITANDO ACTIVITY PARA 'EDITAR'
+
+        if(getIntent().getBooleanExtra("boolEditar", false)){
+            setTitle(getResources().getString(R.string.title_editar_colec));
+            btnAdd.setText(getResources().getString(R.string.minhaColec_editar));
+
+            setandoInformaçõesEdit();
+        }
+
+        // SETANDO CLICK LISTENERS DENTRO DA CLASSE
+        img1.setOnClickListener(this); // imageview 1
+        img2.setOnClickListener(this); // imageview 2
+        img3.setOnClickListener(this); // imageview 3
+        btnAdd.setOnClickListener(this); // btn add colecionável
+        btnDel01.setOnClickListener(this); // imgbtn delete 1
+        btnDel02.setOnClickListener(this); // imgbtn delete 2
+        btnDel03.setOnClickListener(this); // imgbtn delete 3
 
         // CONFIGURANDO 'VALOR' PARA REAL
         Locale local = new Locale("pt", "BR");
@@ -157,9 +176,20 @@ public class CadastroColecaoActivity extends AppCompatActivity
             case R.id.cadastroColec_img3:
                 escolherFoto(3);
                 break;
+            case R.id.cadastroColec_btnDel01:
+                img1.setImageResource(R.drawable.imgpadrao_colec);
+                imgUrl1 = "";
+                break;
+            case R.id.cadastroColec_btnDel02:
+                img2.setImageResource(R.drawable.imgpadrao_colec);
+                imgUrl2 = "";
+                break;
+            case R.id.cadastroColec_btnDel03:
+                img3.setImageResource(R.drawable.imgpadrao_colec);
+                imgUrl3 = "";
+                break;
             case R.id.cadastroColec_btnAdd: // Se clicou no btn adicionar
                 verificarCampos();
-
                 break;
         }
     }
@@ -192,6 +222,10 @@ public class CadastroColecaoActivity extends AppCompatActivity
                     Colecionável colecionávelAdd = new Colecionável(txtNome.getText().toString(), txtDesc.getText().toString(),
                             txtValor.getText().toString(), spinnerCategorias.getSelectedItem().toString(),
                             checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido
+
+                    if(getIntent().getBooleanExtra("boolEditar", false)){
+                        colecionávelAdd.setIdColecionavel(colecEdit.getIdColecionavel());
+                    }
 
                     if(!txtEtiq.getText().toString().isEmpty()){ // adicionando etiqueta
                         colecionávelAdd.setEtiquetaCustomizada(txtEtiq.getText().toString());
@@ -235,6 +269,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
     }
 
     private void salvarFotosFirebase(String imgStringUrl, final int qntdFotos, int fotoAtual){
+
         StorageReference imagemColecionavel = storage.child("imagens")
                 .child("colecionaveis")
                 .child(colecionável.getIdColecionavel()) // id do colecionável
@@ -255,6 +290,12 @@ public class CadastroColecaoActivity extends AppCompatActivity
                             colecionável.setImagens(listaFotosFirebase); // setando o url das imagens de dentro do firebase
                             colecionável.salvarColecionável(); // SALVANDO COLECIONÁVEL ATRAVÉS DO MODELO DE CLASSE 'COLECIONÁVEL'
                             ProgressLoadingJIGB.finishLoadingJIGB(getContext()); // Retirando o progress loading
+
+                            if(getIntent().getBooleanExtra("boolEditar", false)){
+                                Intent intent = new Intent();
+                                intent.putExtra("colecAtualizado", colecionável);
+                                setResult(RESULT_CODE, intent);
+                            }
                             finish();
                         }
                     }
@@ -270,7 +311,59 @@ public class CadastroColecaoActivity extends AppCompatActivity
         });
     }
 
+    // SETANDO INFORMAÇÕES PARA EDIT
+    private void setandoInformaçõesEdit(){
+        colecEdit = (Colecionável) getIntent().getSerializableExtra("colecEditar");
 
+        txtNome.setText(colecEdit.getNome());
+        txtDesc.setText(colecEdit.getDescrição());
+
+        // Transformando string em long
+        String valor = colecEdit.getValor().substring(2);
+        valor = valor.replace(".", ""); // Retirando o(s) ponto(s) do valor
+        valor = valor.replace(",", ""); // Retirando a virgula do valor
+        txtValor.setValue(Long.parseLong(valor));
+
+        // Passando pelos valores do spinner para procurar o que foi selecionado
+        for (int i = 0; i < spinnerCategorias.getCount(); i++) {
+            if (spinnerCategorias.getItemAtPosition(i).toString().equals(colecEdit.getCategoria())) {
+                spinnerCategorias.setSelection(i);
+            }
+        }
+        if(colecEdit.getEtiquetaCustomizada() != null){
+            txtEtiq.setText(colecEdit.getEtiquetaCustomizada());
+        }
+        if(colecEdit.isBoolAdquirido()){
+            checkAdq.setChecked(true);
+            txtComp.setText(colecEdit.getLocalCompra());
+            if(colecEdit.isBoolPublico()){
+                switchPublico.setChecked(true);
+            }
+        }
+
+        /*String urlAtual = colecEdit.getImagens().get(0); // url em string
+        Uri url = Uri.parse(urlAtual); // url em uri
+
+        Glide.with(CadastroColecaoActivity.this).load(url).into(img1);
+        imgUrl1 = urlAtual;
+        try{
+            if(colecEdit.getImagens().get(1) != null){
+                urlAtual = colecEdit.getImagens().get(1);
+                url = Uri.parse(urlAtual);
+                Glide.with(CadastroColecaoActivity.this).load(url).into(img2);
+                imgUrl2 = urlAtual;
+            }
+            if(colecEdit.getImagens().get(2) != null){
+                urlAtual = colecEdit.getImagens().get(2);
+                url = Uri.parse(urlAtual);
+                Glide.with(CadastroColecaoActivity.this).load(url).into(img3);
+                imgUrl3 = urlAtual;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }*/
+
+    }
 
     private void toastPadrao(String msg){
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();

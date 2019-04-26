@@ -4,6 +4,8 @@
     <string name="app_name">Colecionando</string>
     <string name="title_activity_main"></string>
     <string name="title_cadastro_colec">Adicionando na Coleção</string>
+    <string name="title_detalhes_colec">Colecionável</string>
+    <string name="title_editar_colec">Editar colecionável</string>
 
     <!-- Strings Cadastro & Autenticação -->
     <string name="digite_email">Digite seu e-mail</string>
@@ -38,7 +40,8 @@
     <!-- Strings action bar -->
     <string name="action_sair">Sair</string>
     <string name="action_search">Pesquisar</string>
-    <string name="action_editar">Editar perfil</string>
+    <string name="action_editar">Editar colecionável</string>
+    <string name="action_deletar">Deletar colecionável</string>
 
     <!-- Strings de fragment - Minha Conta -->
     <string name="minhaConta_nome">Nome do usuário</string>
@@ -52,6 +55,7 @@
     <string name="minhaColec_etiqueta">Etiqueta Customizada</string>
     <string name="minhaColec_categoria">Categoria</string>
     <string name="minhaColec_adicionar">Adicionar</string>
+    <string name="minhaColec_editar">Atualizar</string>
     <string name="minhaColec_adquiridoBool">Adquirido</string>
     <string name="mColec_foto">Imagem</string>
     <string name="minhaColec_publico">Público</string>

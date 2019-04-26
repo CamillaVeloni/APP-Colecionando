@@ -138,7 +138,7 @@ public class Colecionável implements Serializable {
 
 
     // ARRUMAR PARTE DE MINHA_COLEÇÃO. 1- ABA PARA COLECIONÁVEL JÁ ADQUIRIDO. 2 - ABA PARA COLECIONÁVEL AINDA NÃO ADQUIRIDO
-    public void salvarColecionável(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE = NA 'MINHA_COLEÇÃO'
+    public void salvarColecionável(){ // SALVAR E ATUALIZAR COLECIONÁVEL DENTRO DO FIREBASE = NA 'MINHA_COLEÇÃO'
 
         DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
                 .child("minha_coleção");
@@ -151,7 +151,7 @@ public class Colecionável implements Serializable {
         }
     }
 
-    private void salvarColecionávelPublico(){ // SALVAR COLECIONÁVEL DENTRO DO FIREBASE = NA PARTE PUBLICA -- 'GALERIA_DE_COLECIONAVEIS'
+    private void salvarColecionávelPublico(){ // SALVAR E ATUALIZAR COLECIONÁVEL DENTRO DO FIREBASE = NA PARTE PUBLICA -- 'GALERIA_DE_COLECIONAVEIS'
         DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
                 .child("galeria_coleções");
         dataRef.child(this.categoria) // id_usuário
@@ -186,6 +186,7 @@ public class Colecionável implements Serializable {
         for (int i  = 0; i < this.imagens.size(); i++){ // DELETAR IMAGENS DENTRO DO STORAGE
             StorageReference photoRef = ConfigFirebase.getFirebaseStorage()
                     .getStorage().getReferenceFromUrl(imagens.get(i));
+
             photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -199,7 +200,9 @@ public class Colecionável implements Serializable {
                 }
             });
         }
+
     }
+
 
     private void removerColecionávelPublico(){
 

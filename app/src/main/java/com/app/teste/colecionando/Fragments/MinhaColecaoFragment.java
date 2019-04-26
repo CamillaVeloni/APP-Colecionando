@@ -178,7 +178,7 @@ public class MinhaColecaoFragment extends Fragment {
                 paintText.setTextSize(80);
 
                 canvas.drawRoundRect(0, +10, 400,
-                        485, 20, 20, paintRound);
+                        488, 20, 20, paintRound);
                 canvas.drawText("Deletar", 80, 280, paintText);
             }
 
@@ -204,7 +204,7 @@ public class MinhaColecaoFragment extends Fragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Log.d("Click", "onItemClick");
                 Colecionável colecSelecionado = coleção.get(position);
-                Intent intent = new Intent(fragActivity, ColecionavelActivity.class);
+                Intent intent = new Intent(fragActivity.getApplicationContext(), ColecionavelActivity.class);
                 intent.putExtra("colecSelecionado", colecSelecionado);
                 startActivity(intent);
 

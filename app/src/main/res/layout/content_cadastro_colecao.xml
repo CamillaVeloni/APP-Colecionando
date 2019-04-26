@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activitys.CadastroColecaoActivity"
-    android:orientation="vertical"
     tools:showIn="@layout/activity_cadastro_colecao">
 
     <LinearLayout
@@ -16,39 +16,99 @@
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="199dp"
             android:layout_marginBottom="20dp"
             android:fillViewport="true">
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/cadastroColec_img1"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_weight="1"
                     android:contentDescription="@string/mColec_foto"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cadastroColec_img2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
                     app:srcCompat="@drawable/imgpadrao_colec" />
 
                 <ImageView
                     android:id="@+id/cadastroColec_img2"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_weight="1"
                     android:contentDescription="@string/mColec_foto"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cadastroColec_img3"
+                    app:layout_constraintStart_toEndOf="@+id/cadastroColec_img1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
                     app:srcCompat="@drawable/imgpadrao_colec" />
 
                 <ImageView
                     android:id="@+id/cadastroColec_img3"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_weight="1"
                     android:contentDescription="@string/mColec_foto"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cadastroColec_img2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
                     app:srcCompat="@drawable/imgpadrao_colec" />
-            </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/cadastroColec_btnDel02"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg"
+                    app:layout_constraintStart_toEndOf="@+id/cadastroColec_btnDel01"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_cancel_24dp" />
+
+                <ImageButton
+                    android:id="@+id/cadastroColec_btnDel03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg"
+                    app:layout_constraintStart_toEndOf="@+id/cadastroColec_btnDel02"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_cancel_24dp" />
+
+                <ImageButton
+                    android:id="@+id/cadastroColec_btnDel01"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="140dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_cancel_24dp" />
+
+            </android.support.constraint.ConstraintLayout>
         </HorizontalScrollView>
 
         <Spinner
@@ -70,9 +130,9 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/edit_text_design"
             android:ems="10"
-            android:maxLines="1"
             android:hint="@string/minhaColec_nome"
             android:inputType="textPersonName"
+            android:maxLines="1"
             android:padding="10dp" />
 
         <EditText

@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activitys.ColecionavelActivity"/>
+        <activity android:name=".Activitys.ColecionavelActivity"
+            android:label="@string/title_detalhes_colec"
+            android:parentActivityName=".Activitys.MainActivity"/>
         <activity
             android:name=".Activitys.MainActivity"
             android:label="@string/title_activity_main"
