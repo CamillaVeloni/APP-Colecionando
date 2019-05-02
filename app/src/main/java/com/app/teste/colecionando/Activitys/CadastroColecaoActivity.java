@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.pd.chocobar.ChocoBar;
 
 import java.io.ByteArrayOutputStream;
 import java.text.CollationElementIterator;
@@ -211,7 +212,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 // true == se foi selecionado o checkBox e possui algo dentro OU se não foi selecionado o checkBox
 
                 if(checkAdq.isChecked() && txtComp.getText().toString().isEmpty()){ // Checando se o checkBox foi selecionado & o campo tá nulo
-                    toastPadrao("Porfavor, preencha todos os campos obrigatórios.");
+                    chocoBarPadrao("Porfavor, preencha todos os campos obrigatórios.");
                 }else if(checkAdq.isChecked() && !txtComp.getText().toString().isEmpty() ||
                         !checkAdq.isChecked()){ // Checando se foi selecionado & tem algo no campo OU se não foi selecionado
                     booleanaChecked = true;
@@ -248,11 +249,11 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 }
 
             }else{
-                toastPadrao("Porfavor, preencha todos os campos obrigatórios.");
+                chocoBarPadrao("Porfavor, preencha todos os campos obrigatórios.");
             }
 
         }else{
-            toastPadrao("Selecione pelo menos uma foto.");
+            chocoBarPadrao("Selecione pelo menos uma foto.");
         }
 
     }
@@ -304,7 +305,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                toastPadrao("Erro ao dar upload na imagem.");
+                chocoBarPadrao("Erro ao dar upload na imagem.");
                 ProgressLoadingJIGB.finishLoadingJIGB(getContext()); // Retirando o progress loading
                 Log.d("ERRO IMG", "Falha ao fazer upload: " + e.getMessage());
             }
@@ -345,19 +346,19 @@ public class CadastroColecaoActivity extends AppCompatActivity
         Uri url = Uri.parse(urlAtual); // url em uri
 
         Glide.with(CadastroColecaoActivity.this).load(url).into(img1);
-        imgUrl1 = urlAtual;
+        listaFotosFirebase.add(urlAtual);
         try{
             if(colecEdit.getImagens().get(1) != null){
                 urlAtual = colecEdit.getImagens().get(1);
                 url = Uri.parse(urlAtual);
                 Glide.with(CadastroColecaoActivity.this).load(url).into(img2);
-                imgUrl2 = urlAtual;
+                listaFotosFirebase.add(urlAtual);
             }
             if(colecEdit.getImagens().get(2) != null){
                 urlAtual = colecEdit.getImagens().get(2);
                 url = Uri.parse(urlAtual);
                 Glide.with(CadastroColecaoActivity.this).load(url).into(img3);
-                imgUrl3 = urlAtual;
+                listaFotosFirebase.add(urlAtual);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -365,8 +366,12 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
     }
 
-    private void toastPadrao(String msg){
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    private void chocoBarPadrao(String text){
+        ChocoBar.builder().setActivity(CadastroColecaoActivity.this)
+                .setText(text)
+                .setDuration(ChocoBar.LENGTH_SHORT)
+                .build()
+                .show();
     }
 
 

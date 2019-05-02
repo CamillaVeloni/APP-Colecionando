@@ -5,17 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -24,13 +16,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.app.teste.colecionando.Activitys.CadastroColecaoActivity;
 import com.app.teste.colecionando.Activitys.ColecionavelActivity;
@@ -40,12 +29,11 @@ import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.crowdfire.cfalertdialog.CFAlertDialog;
+import com.forms.sti.progresslitieigb.ProgressLoadingJIGB;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -146,7 +134,7 @@ public class MinhaColecaoFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 colecRestaurado.removerColecionável();
 
-                                Toast.makeText(fragActivity, "Deletado com sucesso!", Toast.LENGTH_SHORT).show();
+                                chocoBarPadrao("Deletado com sucesso");
                                 dialog.dismiss();
                             }
                         }).addButton("Cancelar", -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT,
@@ -157,7 +145,7 @@ public class MinhaColecaoFragment extends Fragment {
                                 coleção.add(posiçãoAnterior, colecRestaurado);
                                 adapter.notifyDataSetChanged();
 
-                                Toast.makeText(fragActivity, "Colecionável restaurado com sucesso!", Toast.LENGTH_SHORT).show();
+                                chocoBarPadrao("Colecionável restaurado com sucesso!");
                                 dialog.dismiss();
                             }
                         }).setCancelable(false);
@@ -215,17 +203,19 @@ public class MinhaColecaoFragment extends Fragment {
 
     public void inicializarData(){
 
+        ProgressLoadingJIGB.startLoadingJIGB(context,R.raw.trail_loading, // Travando tela para 'Carregar' - progress loading
+                "",0,600,600);
+
         coleçãoUsuarioRef.addValueEventListener(new ValueEventListener() { // Recuperando dados da minha_coleção passando para lista
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 coleção.clear();
                 for(DataSnapshot data : dataSnapshot.getChildren()){
                     coleção.add(data.getValue(Colecionável.class));
                 }
                 Collections.reverse(coleção);
                 adapter.notifyDataSetChanged();
-
+                ProgressLoadingJIGB.finishLoadingJIGB(context); // Retirando o progress loading
             }
 
             @Override
@@ -233,6 +223,14 @@ public class MinhaColecaoFragment extends Fragment {
 
             }
         });
+    }
+
+    private void chocoBarPadrao(String text){
+        ChocoBar.builder().setActivity(fragActivity)
+                .setText(text)
+                .setDuration(ChocoBar.LENGTH_SHORT)
+                .build()
+                .show();
     }
 
     public void onAttach(Context context) {

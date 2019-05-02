@@ -3,13 +3,10 @@ package com.app.teste.colecionando.Activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Usuário;
@@ -21,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.pd.chocobar.ChocoBar;
 
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
@@ -68,7 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                     logarUsuario(us);
 
                 }else{
-                    Toast.makeText(getContext(), "Preencha o(s) campo(s)!", Toast.LENGTH_SHORT).show();
+                    chocoBarPadrao("Preencha o(s) campo(s)!");
+                    //Toast.makeText(getContext(), "Preencha o(s) campo(s)!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }else{
-                    String exceção = "";
+                    String exceção;
                     try{
                         throw task.getException();
                     }catch (FirebaseAuthInvalidUserException e){ // quando o e-mail do usuário não está cadastrado
@@ -98,10 +97,19 @@ public class LoginActivity extends AppCompatActivity {
                         exceção = "Não foi possivel fazer o login. " + e.getMessage();
                         e.printStackTrace();
                     }
-                    Toast.makeText(getContext(), exceção, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), exceção, Toast.LENGTH_SHORT).show();
+                    chocoBarPadrao(exceção);
                 }
             }
         });
+    }
+
+    private void chocoBarPadrao(String text){
+        ChocoBar.builder().setActivity(LoginActivity.this)
+                .setText(text)
+                .setDuration(ChocoBar.LENGTH_SHORT)
+                .build()
+                .show();
     }
 
 

@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.pd.chocobar.ChocoBar;
 
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
@@ -31,7 +32,6 @@ public class CadastroActivity extends AppCompatActivity {
     private Button btnCadastro;
     private ExtendedEditText cadastroNome, cadastroEmail, cadastroSenha;
     private FirebaseAuth mAuth;
-    private DatabaseReference referenciaDatabase;
     private Usuário usuario;
 
     @Override
@@ -56,7 +56,7 @@ public class CadastroActivity extends AppCompatActivity {
                     usuario.setSenha(cadastroSenha.getText().toString());
                     cadastrarUsuarioFirebase();
                 }else{
-                    Toast.makeText(getContext(), "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                    chocoBarPadrao("Preencha todos os campos!");
                 }
             }
         });
@@ -74,13 +74,13 @@ public class CadastroActivity extends AppCompatActivity {
                     // ADICIONANDO UM NOME NO PERFIL DO USUÁRIO -- VALE RESSALTAR QUE É O DISPLAY NAME
                     UsuárioFirebase.atualizarNomeUsuario(usuario.getNome());
 
-                    Toast.makeText(getContext(),
-                            "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+                    chocoBarPadrao("Cadastro realizado com sucesso");
+
                     finish();
 
                 }else{
                     // TRATAMENTO DE EXCEÇÃO //
-                    String exceção = "";
+                    String exceção;
                     try {
                         throw task.getException();
                     }catch (FirebaseAuthWeakPasswordException e){ // Tratamento quando a senha não é forte
@@ -96,12 +96,19 @@ public class CadastroActivity extends AppCompatActivity {
                         exceção = "Não foi possivel ser feito o cadastro. " + e.getMessage();
                         e.printStackTrace(); // escreve no console qual foi o erro
                     }
-                    Toast.makeText(getContext(), exceção, Toast.LENGTH_SHORT).show();
-
+                    chocoBarPadrao(exceção);
                 }
             }
         });
 
+    }
+
+    private void chocoBarPadrao(String text){
+        ChocoBar.builder().setActivity(CadastroActivity.this)
+                .setText(text)
+                .setDuration(ChocoBar.LENGTH_SHORT)
+                .build()
+                .show();
     }
 
     private Context getContext() { // RETORNAR CONTEXTO DA TELA

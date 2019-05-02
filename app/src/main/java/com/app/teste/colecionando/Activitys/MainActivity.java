@@ -47,13 +47,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar); // usado para que a toolbar funcione bem com versões anteriores
 
         fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Colocar ação de adicionar colecionável", Snackbar.LENGTH_LONG)
-                        .setAction("Colecionável", null).show();
-            }
-        });
 
         // CONFIGURAÇÃO DO NAV. DRAWER
         DrawerLayout drawer = findViewById(R.id.drawer_layout); // Recuperando o layout drawer que fica
@@ -88,6 +81,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (savedInstanceState == null) {
+            setTitle(R.string.title_activity_main);
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.FrameLayoutContainer, fragMinhaColecão)
@@ -117,17 +111,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId(); // Recuperar o id do item clicado
         // Verificar qual a opção clicada através do id
         if (id == R.id.nav_mColeção) { // Entrar fragment Minha Coleção
+            setTitle(R.string.title_activity_main);
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.FrameLayoutContainer, fragMinhaColecão);
             transaction.commit();
 
         } else if (id == R.id.nav_coleções) { // Entrar fragment Galeria de Coleções
             ColecoesFragment colecFragment = new ColecoesFragment();
+            setTitle(R.string.title_galeria_colec);
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.FrameLayoutContainer, colecFragment);
             transaction.commit();
 
         } else if (id == R.id.nav_mConta) { // Entrar fragment Minha Conta
+            setTitle(R.string.title_edit_conta);
             ContaFragment contaFragment = new ContaFragment();
             contaFragment.setHasOptionsMenu(true); // Método para que a fragment possa reescrever o onCreateOptionsMenu
             transaction = getSupportFragmentManager().beginTransaction();
@@ -166,7 +163,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void deslogarUsuario(){
-
         try {
             mAuth.signOut();
         }catch(Exception e){

@@ -154,7 +154,7 @@ public class Colecionável implements Serializable {
     private void salvarColecionávelPublico(){ // SALVAR E ATUALIZAR COLECIONÁVEL DENTRO DO FIREBASE = NA PARTE PUBLICA -- 'GALERIA_DE_COLECIONAVEIS'
         DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
                 .child("galeria_coleções");
-        dataRef.child(this.categoria) // id_usuário
+        dataRef.child(this.categoria) // categoria
                 .child(this.idColecionavel) // id_colecionável
                 .setValue(this); // setando dados
 
@@ -210,6 +210,7 @@ public class Colecionável implements Serializable {
                 .child("galeria_coleções")
                 .child(this.categoria)
                 .child(this.idColecionavel);
+
         dataRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

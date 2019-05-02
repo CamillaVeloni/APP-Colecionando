@@ -88,10 +88,10 @@
 
                 <ImageButton
                     android:id="@+id/cadastroColec_btnDel03"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_marginStart="150dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:background="@drawable/bg"
                     app:layout_constraintStart_toEndOf="@+id/cadastroColec_btnDel02"
                     app:layout_constraintTop_toTopOf="parent"

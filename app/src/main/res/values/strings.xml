@@ -2,10 +2,12 @@
 
     <!-- Nome do app -->
     <string name="app_name">Colecionando</string>
-    <string name="title_activity_main"></string>
+    <string name="title_activity_main">Minha Coleção</string>
     <string name="title_cadastro_colec">Adicionando na Coleção</string>
     <string name="title_detalhes_colec">Colecionável</string>
     <string name="title_editar_colec">Editar colecionável</string>
+    <string name="title_galeria_colec">Museu de Coleções</string>
+    <string name="title_edit_conta">Editar Conta</string>
 
     <!-- Strings Cadastro & Autenticação -->
     <string name="digite_email">Digite seu e-mail</string>
@@ -63,6 +65,7 @@
     <string name="mColec_descLista">Aqui vai a descrição do colecionável</string>
     <string name="mColec_dataLista">01/01/2019</string>
     <string name="mColec_etiqLista">Etiqueta</string>
+    <string name="colec_filtrarCateg">Filtrar por Categoria</string>
 
     <!-- Strings de Categorias - Adicionar Categoria no Colecionável (Spinner) -->
     <string-array name="minhaColec_categorias">
@@ -83,4 +86,6 @@
         <item>Cartofilia</item>
         <item>Bibliofilia</item>
     </string-array>
+    <string name="colecPublico_textCat">Selecione a categoria desejada</string>
+
 </resources>

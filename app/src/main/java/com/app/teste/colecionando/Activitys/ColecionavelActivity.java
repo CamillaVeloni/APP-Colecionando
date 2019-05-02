@@ -22,6 +22,7 @@ import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
 import com.bumptech.glide.Glide;
 import com.crowdfire.cfalertdialog.CFAlertDialog;
+import com.pd.chocobar.ChocoBar;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -35,6 +36,7 @@ public class ColecionavelActivity extends AppCompatActivity {
     private Switch switchPublic;
     public static final int REQUEST_CODE = 1;
     private Colecionável colec;
+    private boolean boolGaleria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class ColecionavelActivity extends AppCompatActivity {
         // Recuperando colecionável selecionado pela intent
         Intent intent = getIntent();
         colec = (Colecionável) intent.getSerializableExtra("colecSelecionado");
-
+        boolGaleria = intent.getBooleanExtra("boolGaleria", false);
         setandoInfo();
     }
 
@@ -117,7 +119,9 @@ public class ColecionavelActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflar o menu
-        getMenuInflater().inflate(R.menu.menu_colec, menu);
+        if(!boolGaleria){
+            getMenuInflater().inflate(R.menu.menu_colec, menu);
+        }
         return true;
     }
 
@@ -159,8 +163,11 @@ public class ColecionavelActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 colec.removerColecionável();
 
-                                Toast.makeText(ColecionavelActivity.this,
-                                        "Deletado com sucesso!", Toast.LENGTH_SHORT).show();
+                                ChocoBar.builder().setActivity(ColecionavelActivity.this)
+                                        .setText("Deletado com sucesso!")
+                                        .setDuration(ChocoBar.LENGTH_SHORT)
+                                        .build()
+                                        .show();
                                 dialog.dismiss();
                                 finish();
                             }

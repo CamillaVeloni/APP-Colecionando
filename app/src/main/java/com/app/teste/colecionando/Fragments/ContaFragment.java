@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Activitys.LoginActivity;
 import com.app.teste.colecionando.Activitys.MainActivity;
 import com.app.teste.colecionando.Ajuda.TratamentoDeFotos;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
@@ -37,6 +38,7 @@ import com.app.teste.colecionando.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
+import com.pd.chocobar.ChocoBar;
 
 import java.io.IOException;
 
@@ -113,13 +115,13 @@ public class ContaFragment extends Fragment {
                         TextView nome_nav = headerView.findViewById(R.id.txtNome_nav_header);
                         nome_nav.setText(txtPerfilNome.getText().toString());
 
-                        Toast.makeText(fragActivity,"Nome do perfil atualizado com sucesso", Toast.LENGTH_SHORT).show();
+                        chocoBarPadrao("Nome de perfil atualizado com sucesso");
                     }catch (Exception e){
                         e.printStackTrace();
                     }
 
                 }else{
-                    Toast.makeText(getContext(), "Coloque um nome para o perfil", Toast.LENGTH_SHORT).show();
+                    chocoBarPadrao("Coloque um nome para o perfil");
                 }
             }
         });
@@ -222,6 +224,14 @@ public class ContaFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
 
+    }
+
+    private void chocoBarPadrao(String text){
+        ChocoBar.builder().setActivity(fragActivity)
+                .setText(text)
+                .setDuration(ChocoBar.LENGTH_SHORT)
+                .build()
+                .show();
     }
 
 
