@@ -16,15 +16,15 @@
             android:label="@string/title_detalhes_colec"
             android:parentActivityName=".Activitys.MainActivity"/>
         <activity
-            android:name=".Activitys.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Activitys.MainActivity" />
         <activity
             android:name=".Activitys.CadastroColecaoActivity"
             android:label="@string/title_cadastro_colec"
-            android:parentActivityName=".Activitys.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activitys.CadastroActivity" />
-        <activity android:name=".Activitys.LoginActivity">
+            android:parentActivityName=".Activitys.MainActivity"/>
+        <activity android:name=".Activitys.CadastroActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activitys.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    style="@style/bg"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.MClassifPagerFragment">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_margin="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@color/colorText"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardUseCompatPadding="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="6dp">
+
+            <ImageView
+                android:id="@+id/imgColecionavel"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="6dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/imgpadrao_colec"
+                card_view:srcCompat="@drawable/imgpadrao_colec" />
+
+            <TextView
+                android:id="@+id/txtColecion_pager"
+                style="@style/txtPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="false"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="89dp"
+                android:layout_marginTop="22dp"
+                android:layout_toEndOf="@+id/divider"
+                android:maxWidth="239dp"
+                android:maxHeight="40dp"
+                android:text="@string/colecion_pager" />
+
+            <TextView
+                android:id="@+id/txtFavoritos_pager"
+                style="@style/txtPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtColecion_pager"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="94dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="147dp"
+                android:layout_marginRight="147dp"
+                android:layout_toEndOf="@+id/divider"
+                android:maxWidth="239dp"
+                android:maxHeight="100dp"
+                android:text="@string/favoritos_pager" />
+
+            <TextView
+                android:id="@+id/txtAvaliados_pager"
+                style="@style/txtPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtFavoritos_pager"
+                android:layout_alignBaseline="@+id/imgColecionavel"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="145dp"
+                android:layout_marginRight="145dp"
+                android:layout_marginBottom="-13dp"
+                android:layout_toEndOf="@+id/divider"
+                android:text="@string/avaliados_pager"
+                android:textAlignment="textStart" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="105dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/imgColecionavel"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/txtNumeros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView8"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
+                android:text="X" />
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/txtNumeros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
+                android:text="X" />
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/txtNumeros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="10dp"
+                android:text="X" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/txtAvaliados_pager"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="false"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="77dp"
+                android:background="?android:attr/listDivider" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

@@ -88,4 +88,10 @@
     </string-array>
     <string name="colecPublico_textCat">Selecione a categoria desejada</string>
 
+    <string name="titulo_pager_mColeção">Minha Coleção</string>
+    <string name="titulo_pager_mClassif">Meu Perfil</string>
+    <string name="colecion_pager">Meus colecionáveis</string>
+    <string name="favoritos_pager">Favoritos</string>
+    <string name="avaliados_pager">Avaliados</string>
+
 </resources>

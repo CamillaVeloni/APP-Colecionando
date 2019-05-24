@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,9 +44,18 @@ public class ColecionavelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colecionavel);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_detColec);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // colocando botão voltar para activity principal
+        // Recuperando colecionável selecionado pela intent
+        Intent intent = getIntent();
+        colec = (Colecionável) intent.getSerializableExtra("colecSelecionado");
+        boolGaleria = intent.getBooleanExtra("boolGaleria", false);
+
+        if(!boolGaleria){
+            AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+            appBarLayout.setVisibility(View.VISIBLE);
+            Toolbar toolbar = findViewById(R.id.toolbar_detColec);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // colocando botão voltar para activity principal
+        }
 
         // Inicializando componentes
         carouselView = findViewById(R.id.carouselView);
@@ -60,11 +70,7 @@ public class ColecionavelActivity extends AppCompatActivity {
         checkAdq = findViewById(R.id.colecSelecionado_adq);
         switchPublic = findViewById(R.id.colecSelecionado_public);
 
-        // Recuperando colecionável selecionado pela intent
-        Intent intent = getIntent();
-        colec = (Colecionável) intent.getSerializableExtra("colecSelecionado");
-        boolGaleria = intent.getBooleanExtra("boolGaleria", false);
-        setandoInfo();
+        setandoInfo(); // setando informações do colecionável
     }
 
     private void setandoInfo(){

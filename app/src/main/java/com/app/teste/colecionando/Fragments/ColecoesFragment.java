@@ -23,7 +23,9 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.teste.colecionando.Activitys.ColecionavelActivity;
@@ -79,13 +81,10 @@ public class ColecoesFragment extends Fragment {
         categorias = getResources()
                 .getStringArray(R.array.minhaColec_categorias);
 
-
-        galeriaColecRef = ConfigFirebase.getFirebaseDatabase() // Recuperando os colecionável públicos
-                .child("galeria_coleções");
-
-
         inicializarRecyclerView();
         inicializarAdapter();
+
+
         inicializarData();
 
         btnCategoria.setOnClickListener(new View.OnClickListener() {
@@ -95,10 +94,10 @@ public class ColecoesFragment extends Fragment {
             }
         });
 
-        FloatingActionButton floatingActionButton = ((MainActivity) getActivity()).getFloatingActionButton();
+        /*FloatingActionButton floatingActionButton = ((MainActivity) getActivity()).getFloatingActionButton();
         if (floatingActionButton != null) {
             floatingActionButton.hide();
-        }
+        }*/
 
         return view;
     }
@@ -132,6 +131,14 @@ public class ColecoesFragment extends Fragment {
                 CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.addButton("Apagar filtro", -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT,
+                CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        inicializarData();
                         dialogInterface.dismiss();
                     }
                 });
@@ -197,6 +204,9 @@ public class ColecoesFragment extends Fragment {
     }
 
     public void inicializarData(){
+
+        galeriaColecRef = ConfigFirebase.getFirebaseDatabase() // Recuperando os colecionável públicos
+                .child("galeria_coleções");
 
         progressLoading.startLoadingJIGB(context,R.raw.trail_loading, // Travando tela para 'Carregar' - progress loading
                 "",0,600,600);

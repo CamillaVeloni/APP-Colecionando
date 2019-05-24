@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // usado para que a toolbar funcione bem com versões anteriores
 
-        fab = findViewById(R.id.fab);
+        //fab = findViewById(R.id.fab);
 
         // CONFIGURAÇÃO DO NAV. DRAWER
         DrawerLayout drawer = findViewById(R.id.drawer_layout); // Recuperando o layout drawer que fica

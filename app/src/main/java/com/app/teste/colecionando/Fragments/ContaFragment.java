@@ -84,10 +84,10 @@ public class ContaFragment extends Fragment {
         navigationView = fragActivity.findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0);
 
-        FloatingActionButton floatingActionButton = ((MainActivity) getActivity()).getFloatingActionButton();
+        /*FloatingActionButton floatingActionButton = ((MainActivity) getActivity()).getFloatingActionButton();
         if (floatingActionButton != null) {
             floatingActionButton.hide();
-        }
+        }*/
 
         // RECUPERANDO DADOS DO USUÁRIO DE DENTRO DO FIREBASE PARA SETAR NA IMAGE VIEW, NO EDIT TEXT E TEXT VIEW
         FirebaseUser usuario = UsuárioFirebase.getUsuarioAtual();

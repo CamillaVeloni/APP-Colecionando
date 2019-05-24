@@ -12,16 +12,29 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+
+    </style>
 
     <style name="bg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/bg</item>
         <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="txtPerfil">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:shadowColor">#44000000</item>
+    </style>
+
+    <style name="txtNumeros">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/cinza_color</item>
+        <item name="android:shadowColor">#44000000</item>
     </style>
 
     <style name="txtNomeTitulo">
