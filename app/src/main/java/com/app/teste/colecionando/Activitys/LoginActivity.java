@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         loginSenha = findViewById(R.id.txtSenha_login);
         cadastrarUp = findViewById(R.id.btnCadastrarUp);
         btnEntrar = findViewById(R.id.btnLogin);
-        mAuth = ConfigFirebase.getFirebaseAuth();
+        mAuth = ConfigFirebase.getmAuth();
 
         cadastrarUp.setOnClickListener(new View.OnClickListener(){
             @Override

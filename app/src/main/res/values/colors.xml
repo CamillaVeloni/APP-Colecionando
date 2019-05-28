@@ -7,6 +7,7 @@
     <color name="cinza_color">#9E9E9E</color>
     <color name="hard_color">#48495f</color>
     <color name="bg">#F0F0F0</color>
+    <color name="colorRed">#D50202</color>
 
     <color name="red_colorPrimary">#EE1C28</color>
     <color name="green_colorPrimary">#48ea8b</color>
