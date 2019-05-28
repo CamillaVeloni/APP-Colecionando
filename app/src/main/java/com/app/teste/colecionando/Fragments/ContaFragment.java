@@ -74,7 +74,7 @@ public class ContaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_conta, container, false);
 
         fragActivity = this.getActivity();
-        storageReference = ConfigFirebase.getFirebaseStorage();
+        storageReference = ConfigFirebase.getStorage();
 
         imgPerfil = view.findViewById(R.id.img_perfil);
         txtPerfilEmail = view.findViewById(R.id.textView_email);

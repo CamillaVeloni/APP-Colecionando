@@ -12,18 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activitys.ColecionavelActivity"
-            android:label="@string/title_detalhes_colec"
+        <activity android:name=".Activitys.ColecoesListaActivity"
+            android:label="@string/title_galeria_colec"
             android:parentActivityName=".Activitys.MainActivity"/>
         <activity
-            android:name=".Activitys.MainActivity" />
+            android:name=".Activitys.ColecionavelActivity"
+            android:label="@string/title_detalhes_colec"
+            android:parentActivityName=".Activitys.MainActivity" />
+        <activity android:name=".Activitys.MainActivity" />
         <activity
             android:name=".Activitys.CadastroColecaoActivity"
             android:label="@string/title_cadastro_colec"
-            android:parentActivityName=".Activitys.MainActivity"/>
-        <activity android:name=".Activitys.CadastroActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activitys.LoginActivity"
+            android:parentActivityName=".Activitys.MainActivity" />
+        <activity
+            android:name=".Activitys.CadastroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

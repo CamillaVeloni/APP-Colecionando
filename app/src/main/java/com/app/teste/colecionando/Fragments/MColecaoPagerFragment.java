@@ -10,9 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,10 +19,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.app.teste.colecionando.Activitys.CadastroColecaoActivity;
 import com.app.teste.colecionando.Activitys.ColecionavelActivity;
-import com.app.teste.colecionando.Adapter.AdapterRecyclerView;
+import com.app.teste.colecionando.Adapter.AdapterColecionaveis;
+import com.app.teste.colecionando.Ajuda.ColecionaveisData;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
@@ -34,6 +36,7 @@ import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.forms.sti.progresslitieigb.ProgressLoadingJIGB;
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,11 +62,11 @@ public class MColecaoPagerFragment extends Fragment {
     private List<Colecionável> coleção = new ArrayList<>();
     private DatabaseReference coleçãoUsuarioRef;
     private int posiçãoAnterior;
+    ColecionaveisData mData = new ColecionaveisData();
     private boolean restaurado;
     private Colecionável colecRestaurado;
-    private AdapterRecyclerView adapter;
+    private AdapterColecionaveis adapter;
     private Activity fragActivity;
-    private FragmentActivity fragmentActivityContext;
     private View view;
 
 
@@ -84,8 +87,8 @@ public class MColecaoPagerFragment extends Fragment {
         inicializarAdapter();
         inicializarData();
 
-        // CONFIGURANDO FAB
-        FloatingActionButton fab = view.findViewById(R.id.fab);
+        // CONFIGURANDO FAB ADICIONAR
+        FloatingActionButton fab = view.findViewById(R.id.fabAdd);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,15 +97,103 @@ public class MColecaoPagerFragment extends Fragment {
             }
         });
 
+        FloatingActionButton fabFiltro = view.findViewById(R.id.fabFiltro);
+
+        fabFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selecionandoFabFiltro();
+            }
+        });
+
         return view;
     }
 
-    private void chocoBarPadrao(String text){
-        ChocoBar.builder().setActivity(fragActivity)
-                .setText(text)
-                .setDuration(ChocoBar.LENGTH_SHORT)
-                .build()
-                .show();
+    private void selecionandoFabFiltro(){
+
+        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(context);
+        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
+        builder.setTitle("Selecione o tipo de filtro ou apague o filtro já colocado:");
+        builder.setItems(new String[]{"Categoria", "Etiqueta personalizada", "Apagar filtro"},
+                new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int index) {
+
+                if(index == 0){ // categ
+                    selecionandoFiltro(index);
+                    dialogInterface.dismiss();
+                }else if(index == 1){ // etiq
+                    selecionandoFiltro(index);
+                    dialogInterface.dismiss();
+                }else{ // apagar filtro
+                    inicializarData();
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+        builder.show();
+
+    }
+
+    private void selecionandoFiltro(final int index){
+
+        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(context);
+        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
+
+        View viewSpinner = getLayoutInflater() // Converter em objeto View
+                .inflate(R.layout.dialog_spinner, null); // inflar o layout xml
+        final Spinner sp = viewSpinner.findViewById(R.id.spinnerFiltro);
+        TextView txtFiltroSelec = viewSpinner.findViewById(R.id.txtFiltroSelecionado);
+        List<String> listaFiltros;
+
+        // 0 - categoria, 1 - etiqueta
+        if(index == 0){
+            listaFiltros = mData.getKeysUnicasCategoria();
+        }else{
+            txtFiltroSelec.setText(getResources().getString(R.string.colecPart_textEtiq));
+            listaFiltros = mData.getKeysUnicasEtiqueta();
+        }
+
+        ArrayAdapter<String> adapterCateg = new ArrayAdapter<String>(context,
+                android.R.layout.simple_spinner_item, listaFiltros);
+
+        adapterCateg.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp.setAdapter(adapterCateg);
+
+        builder.setHeaderView(viewSpinner);
+
+        builder.addButton("Confirmar", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE,
+                CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String filtrarCategoria = sp.getSelectedItem().toString();
+                        List<Colecionável> listaFiltrada = mData.getTdsColecionaveis();
+
+                        if(index == 0){
+                            listaFiltrada = mData.getColecFiltradosCategoria(filtrarCategoria,
+                                    listaFiltrada);
+                        }else{
+                            listaFiltrada = mData.getColecFiltradosEtiqueta(filtrarCategoria,
+                                    listaFiltrada);
+                        }
+
+                        coleção.clear();
+                        coleção.addAll(listaFiltrada);
+                        adapter.notifyDataSetChanged();
+
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.addButton("Cancelar", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE,
+                CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.show();
+
     }
 
     public void inicializarRecyclerView(){ // Setando layout do recycler view, colocando um layout_manager
@@ -179,7 +270,7 @@ public class MColecaoPagerFragment extends Fragment {
 
         };
 
-        adapter = new AdapterRecyclerView(coleção);
+        adapter = new AdapterColecionaveis(coleção);
         int mFirstPageItemCount = 3;
         adapter.setNotDoAnimationCount(mFirstPageItemCount);
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT); // Animação quando estiver 'descendo' pelo recyclerView
@@ -216,11 +307,15 @@ public class MColecaoPagerFragment extends Fragment {
         coleçãoUsuarioRef.addValueEventListener(new ValueEventListener() { // Recuperando dados da minha_coleção passando para lista
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mData.getTdsColecionaveis().clear();
                 coleção.clear();
+                List<Colecionável> temp = new ArrayList<>();
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-                    coleção.add(data.getValue(Colecionável.class));
+                    temp.add(data.getValue(Colecionável.class));
                 }
-                Collections.reverse(coleção);
+                Collections.reverse(temp);
+                mData.setmList(temp);
+                coleção.addAll(mData.getTdsColecionaveis());
                 adapter.notifyDataSetChanged();
                 ProgressLoadingJIGB.finishLoadingJIGB(context); // Retirando o progress loading
             }
@@ -230,6 +325,14 @@ public class MColecaoPagerFragment extends Fragment {
 
             }
         });
+    }
+
+    private void chocoBarPadrao(String text){
+        ChocoBar.builder().setActivity(fragActivity)
+                .setText(text)
+                .setDuration(ChocoBar.LENGTH_SHORT)
+                .build()
+                .show();
     }
 
     public void onAttach(Context context) {

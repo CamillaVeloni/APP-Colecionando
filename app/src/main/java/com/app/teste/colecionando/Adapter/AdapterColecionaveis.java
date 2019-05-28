@@ -12,10 +12,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 
-public class AdapterRecyclerView extends BaseItemDraggableAdapter<Colecionável, BaseViewHolder> {
+public class AdapterColecionaveis extends BaseItemDraggableAdapter<Colecionável, BaseViewHolder> {
 
 
-    public AdapterRecyclerView(List<Colecionável> data){
+    public AdapterColecionaveis(List<Colecionável> data){
         super(R.layout.layout_item_colecionavel, data);
     }
 
@@ -34,7 +34,7 @@ public class AdapterRecyclerView extends BaseItemDraggableAdapter<Colecionável,
         Glide
                 .with(this.mContext)
                 .load(url)
-                .into((ImageView) helper.getView(R.id.imgColecionavel));
+                .into((ImageView) helper.getView(R.id.imgColecionador_pager));
 
     }
 

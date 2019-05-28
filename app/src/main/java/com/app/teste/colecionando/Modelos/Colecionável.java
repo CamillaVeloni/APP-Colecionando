@@ -32,7 +32,7 @@ public class Colecionável implements Serializable {
     }
 
     public Colecionável(String nome, String descrição, String valor, String categoria, boolean boolAdquirido) {
-        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase().
+        DatabaseReference dataRef = ConfigFirebase.getDatabase().
                 child("minha_coleção");
         setIdColecionavel(dataRef.push().getKey()); // Automaticamente é gerado o id da coleção (id_colecionável)
 
@@ -140,7 +140,7 @@ public class Colecionável implements Serializable {
     // ARRUMAR PARTE DE MINHA_COLEÇÃO. 1- ABA PARA COLECIONÁVEL JÁ ADQUIRIDO. 2 - ABA PARA COLECIONÁVEL AINDA NÃO ADQUIRIDO
     public void salvarColecionável(){ // SALVAR E ATUALIZAR COLECIONÁVEL DENTRO DO FIREBASE = NA 'MINHA_COLEÇÃO'
 
-        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+        DatabaseReference dataRef = ConfigFirebase.getDatabase()
                 .child("minha_coleção");
         dataRef.child(UsuárioFirebase.getIdentificadorUsuario()) // id_usuário
                 .child(this.idColecionavel) // id_colecionável
@@ -152,7 +152,7 @@ public class Colecionável implements Serializable {
     }
 
     private void salvarColecionávelPublico(){ // SALVAR E ATUALIZAR COLECIONÁVEL DENTRO DO FIREBASE = NA PARTE PUBLICA -- 'GALERIA_DE_COLECIONAVEIS'
-        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+        DatabaseReference dataRef = ConfigFirebase.getDatabase()
                 .child("galeria_coleções");
         dataRef.child(this.categoria) // categoria
                 .child(this.idColecionavel) // id_colecionável
@@ -161,7 +161,7 @@ public class Colecionável implements Serializable {
     }
 
     public void removerColecionável(){ // REMOVENDO COLECIONÁVEL DO DATABASE DO FIREBASE = NA MINHA_COLEÇÃO
-        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+        DatabaseReference dataRef = ConfigFirebase.getDatabase()
                 .child("minha_coleção")
                 .child(UsuárioFirebase.getIdentificadorUsuario())
                 .child(this.idColecionavel);
@@ -184,7 +184,7 @@ public class Colecionável implements Serializable {
         }
 
         for (int i  = 0; i < this.imagens.size(); i++){ // DELETAR IMAGENS DENTRO DO STORAGE
-            StorageReference photoRef = ConfigFirebase.getFirebaseStorage()
+            StorageReference photoRef = ConfigFirebase.getStorage() // ele só vai até .getReference() precisado do .getStorage()
                     .getStorage().getReferenceFromUrl(imagens.get(i));
 
             photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -206,7 +206,7 @@ public class Colecionável implements Serializable {
 
     private void removerColecionávelPublico(){
 
-        DatabaseReference dataRef = ConfigFirebase.getFirebaseDatabase()
+        DatabaseReference dataRef = ConfigFirebase.getDatabase()
                 .child("galeria_coleções")
                 .child(this.categoria)
                 .child(this.idColecionavel);

@@ -13,16 +13,14 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class UsuárioFirebase {
 
-    static FirebaseAuth usuario;
+    private static FirebaseAuth usuario = ConfigFirebase.getmAuth();
 
     public static String getIdentificadorUsuario(){ // RETORNANDO O IDENTIFICADOR ID
-        usuario = ConfigFirebase.getFirebaseAuth();
 
         return usuario.getCurrentUser().getUid();
     }
 
     public static FirebaseUser getUsuarioAtual(){ // RETORNANDO USUÁRIO COM TODOS OS DADOS
-        usuario = ConfigFirebase.getFirebaseAuth();
 
         return  usuario.getCurrentUser();
     }

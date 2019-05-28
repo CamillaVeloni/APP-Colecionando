@@ -19,7 +19,7 @@
 
 
         <ImageView
-            android:id="@+id/imgColecionavel"
+            android:id="@+id/imgColecionador_pager"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_alignParentStart="true"
@@ -76,7 +76,7 @@
             style="@style/txtData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/imgColecionavel"
+            android:layout_alignBaseline="@+id/imgColecionador_pager"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"

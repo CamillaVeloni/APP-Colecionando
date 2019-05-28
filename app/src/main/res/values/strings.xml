@@ -68,30 +68,45 @@
     <string name="colec_filtrarCateg">Filtrar por Categoria</string>
 
     <!-- Strings de Categorias - Adicionar Categoria no Colecionável (Spinner) -->
-    <string-array name="minhaColec_categorias">
-        <item>Acessórios</item>
-        <item>Armas</item>
-        <item>Brinquedos</item>
-        <item>Cromos</item>
-        <item>Discos</item>
-        <item>Die-cast</item>
-        <item>Cartas colecionáveis</item>
-        <item>Latas e garrafas</item>
-        <item>Revistas em quadrinhos</item>
-        <item>Bonecas</item>
-        <item>Autografomania</item>
-        <item>Notafilia</item>
+    <string-array name="minhaColec_tdcategorias">
         <item>Numismática</item>
+        <item>Notafilia</item>
+        <item>Brinquedos</item>
+        <item>Latas e garrafas</item>
+        <item>Antiguidades</item>
+        <item>Miniaturas</item>
         <item>Filatelia</item>
+        <item>Acessórios</item>
+        <item>Revistas em quadrinhos</item>
+        <item>Armas</item>
+        <item>Discos</item>
+        <item>Cartas colecionáveis</item>
         <item>Cartofilia</item>
         <item>Bibliofilia</item>
+        <item>Outros</item>
     </string-array>
-    <string name="colecPublico_textCat">Selecione a categoria desejada</string>
+
+    <string-array name="minhaColec_categorias">
+        <item>Numismática</item>
+        <item>Notafilia</item>
+        <item>Brinquedos</item>
+        <item>Latas e garrafas</item>
+        <item>Antiguidades</item>
+        <item>Miniaturas</item>
+        <item>Filatelia</item>
+        <item>Acessórios</item>
+    </string-array>
+
+    <string name="colecPart_textCateg">Selecione a categoria desejada</string>
+    <string name="colecPart_textEtiq">Selecione a etiqueta desejada</string>
 
     <string name="titulo_pager_mColeção">Minha Coleção</string>
     <string name="titulo_pager_mClassif">Meu Perfil</string>
     <string name="colecion_pager">Meus colecionáveis</string>
     <string name="favoritos_pager">Favoritos</string>
     <string name="avaliados_pager">Avaliados</string>
+    <string name="adicionarColec_pager">Adicionar colecionável</string>
+    <string name="filtrarColec_pager">Filtrar colecionaveis</string>
+    <string name="museuVirtual_maisFiltros">Mais categorias</string>
 
 </resources>

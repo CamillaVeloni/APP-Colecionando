@@ -31,6 +31,12 @@
         <item name="android:shadowColor">#44000000</item>
     </style>
 
+    <style name="txtFiltros_museu">
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:shadowColor">#44000000</item>
+    </style>
+
     <style name="txtNumeros">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/cinza_color</item>

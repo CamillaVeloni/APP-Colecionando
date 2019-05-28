@@ -78,7 +78,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar_mColec);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // colocando botão voltar para activity principal
-        storage = ConfigFirebase.getFirebaseStorage();
+        storage = ConfigFirebase.getStorage();
 
         // VERIFICAÇÃO DE PERMISSÃO - ARMAZENAMENTO EXTERNO //
         if (Build.VERSION.SDK_INT >= 23) { // Verificar se o usuário está utilizando alguma versão superior à do Marshmallow (api-23)
@@ -117,7 +117,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
         // CONFIGURAÇÃO DO SPINNER //
         String[] categorias = getResources()
-                .getStringArray(R.array.minhaColec_categorias); // Recuperando array de categorias colocadas no strings.xml
+                .getStringArray(R.array.minhaColec_tdcategorias); // Recuperando array de categorias colocadas no strings.xml
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_spinner_item, categorias);

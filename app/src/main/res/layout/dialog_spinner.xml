@@ -6,17 +6,17 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtFiltroSelecionado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/colecPublico_textCat"
+        android:text="@string/colecPart_textCateg"
         android:textAppearance="@style/txtTitulo_Detalhe" />
 
     <Spinner
-        android:id="@+id/spinnerCategoria"
+        android:id="@+id/spinnerFiltro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

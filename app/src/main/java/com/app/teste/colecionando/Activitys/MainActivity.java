@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = ConfigFirebase.getFirebaseAuth();
+        mAuth = ConfigFirebase.getmAuth();
         fragMinhaColecão = new MinhaColecaoFragment();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // usado para que a toolbar funcione bem com versões anteriores
@@ -86,11 +86,7 @@ public class MainActivity extends AppCompatActivity
                     .beginTransaction()
                     .add(R.id.FrameLayoutContainer, fragMinhaColecão)
                     .commit();
-        }/*
-        // SETANDO O FRAGMENT PRINCIPAL - MINHA COLEÇÃO //
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.FrameLayoutContainer, fragMinhaColecão);
-        transaction.commit();*/
+        }
     }
 
     @Override
@@ -121,7 +117,7 @@ public class MainActivity extends AppCompatActivity
             setTitle(R.string.title_galeria_colec);
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.FrameLayoutContainer, colecFragment);
-            transaction.commit();
+            transaction.addToBackStack(null).commit();
 
         } else if (id == R.id.nav_mConta) { // Entrar fragment Minha Conta
             setTitle(R.string.title_edit_conta);

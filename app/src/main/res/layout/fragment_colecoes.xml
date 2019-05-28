@@ -5,23 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    style="@style/bg"
+    android:background="@color/bg"
     tools:context=".Fragments.ColecoesFragment">
-
-    <Button
-        android:id="@+id/btnCategoria"
-        style="?attr/buttonBarButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/colec_filtrarCateg"
-        android:textSize="14sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerGaleriaColec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp"
         android:fadingEdge="none" />
 
 </LinearLayout>

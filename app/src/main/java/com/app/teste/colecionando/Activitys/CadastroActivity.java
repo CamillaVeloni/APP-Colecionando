@@ -63,7 +63,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void cadastrarUsuarioFirebase(){ // CADASTRAR USUÁRIO NO FIREBASE
-        mAuth = ConfigFirebase.getFirebaseAuth();
+        mAuth = ConfigFirebase.getmAuth();
         mAuth.createUserWithEmailAndPassword(
                 usuario.getEmail(), usuario.getSenha()
         ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

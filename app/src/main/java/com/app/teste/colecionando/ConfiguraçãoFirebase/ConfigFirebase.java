@@ -12,6 +12,24 @@ public class ConfigFirebase {
     private static FirebaseAuth mAuth;
     private static StorageReference storage;
 
+    static{
+        database = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance().getReference();
+    }
+
+    public static DatabaseReference getDatabase() {
+        return database;
+    }
+
+    public static FirebaseAuth getmAuth() {
+        return mAuth;
+    }
+
+    public static StorageReference getStorage() {
+        return storage;
+    }
+
     // MÉTODO PARA RECUPERAR A INSTÂNCIA DO BANCO DE DADOS DO FIREBASE //
     public static DatabaseReference getFirebaseDatabase(){
         if (database == null) { // se for igual a nulo quer dizer que é preciso criar uma
