@@ -23,7 +23,8 @@
         <activity
             android:name=".Activitys.CadastroColecaoActivity"
             android:label="@string/title_cadastro_colec"
-            android:parentActivityName=".Activitys.MainActivity" />
+            android:parentActivityName=".Activitys.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activitys.CadastroActivity"
             android:screenOrientation="portrait" />

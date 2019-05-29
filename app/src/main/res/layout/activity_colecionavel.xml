@@ -68,9 +68,10 @@
             android:textAppearance="@style/txtResto_Detalhe" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="?android:attr/listDivider" />
 
         <TextView
             android:layout_width="match_parent"
@@ -91,6 +92,28 @@
             android:layout_marginEnd="10dp"
             android:inputType='textMultiLine'
             android:text="Aqui é a descrição mesmo do colecionável"
+            android:textAppearance="@style/txtResto_Detalhe" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_etiqLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:inputType='textMultiLine'
+            android:text="Etiqueta personalizada"
+            android:textAppearance="@style/txtResto_Layout"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/colecSelecionado_etiq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="10dp"
+            android:inputType='textMultiLine'
+            android:text="Etiqueta Personalizada"
             android:textAppearance="@style/txtResto_Detalhe" />
 
         <TextView
@@ -135,28 +158,6 @@
             android:layout_marginEnd="10dp"
             android:inputType='textMultiLine'
             android:text="Local da compra do Colecionavel"
-            android:textAppearance="@style/txtResto_Detalhe" />
-
-        <TextView
-            android:id="@+id/colecSelecionado_etiqLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:inputType='textMultiLine'
-            android:text="Etiqueta personalizada"
-            android:textAppearance="@style/txtResto_Layout"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/colecSelecionado_etiq"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="10dp"
-            android:inputType='textMultiLine'
-            android:text="Etiqueta Personalizada"
             android:textAppearance="@style/txtResto_Detalhe" />
 
         <LinearLayout
