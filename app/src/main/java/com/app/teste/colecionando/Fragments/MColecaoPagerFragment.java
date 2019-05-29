@@ -2,6 +2,7 @@ package com.app.teste.colecionando.Fragments;
 
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,13 +11,20 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -68,6 +76,8 @@ public class MColecaoPagerFragment extends Fragment {
     private AdapterColecionaveis adapter;
     private Activity fragActivity;
     private View view;
+    private android.support.v7.widget.SearchView searchView = null;
+    private android.support.v7.widget.SearchView.OnQueryTextListener queryTextListener;
 
 
     @Override
@@ -77,6 +87,7 @@ public class MColecaoPagerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_mcolecao_pager, container, false);
 
         fragActivity = this.getActivity();
+
         posiçãoAnterior = 0;
         colecRestaurado = new Colecionável();
         coleçãoUsuarioRef = ConfigFirebase.getFirebaseDatabase() // Recuperando todos os colecionável do usuário através do UID
@@ -107,6 +118,12 @@ public class MColecaoPagerFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
     private void selecionandoFabFiltro(){
@@ -325,6 +342,60 @@ public class MColecaoPagerFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchItem.setVisible(true);
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager
+                    .getSearchableInfo(getActivity().getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String novoTexto) {
+                    Log.i("onQuery", "TextChange: " + novoTexto);
+
+                    if(novoTexto != null && !novoTexto.isEmpty()){
+                        pesquisarColecionavelNome(novoTexto);
+                    } else if (novoTexto.isEmpty()){
+                        coleção.clear();
+                        coleção.addAll(mData.getTdsColecionaveis());
+                        adapter.notifyDataSetChanged();
+                    }
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.i("onQuery", "Submit: " + query);
+                    if(query != null && !query.isEmpty() ){
+                        pesquisarColecionavelNome(query);
+                    }
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void pesquisarColecionavelNome(String pesquisa){
+        Log.d("OnQuery", "Pesquisa passou por textChange: " + pesquisa);
+        List<Colecionável> listaFiltrada = mData.getTdsColecionaveis();
+        listaFiltrada = mData.getColecFiltradosNome(pesquisa, listaFiltrada);
+
+        coleção.clear();
+        coleção.addAll(listaFiltrada);
+        adapter.notifyDataSetChanged();
+
     }
 
     private void chocoBarPadrao(String text){
