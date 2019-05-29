@@ -14,24 +14,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.app.teste.colecionando.Activitys.LoginActivity;
-import com.app.teste.colecionando.Activitys.MainActivity;
-import com.app.teste.colecionando.Ajuda.TratamentoDeFotos;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.R;
@@ -84,11 +76,6 @@ public class ContaFragment extends Fragment {
         navigationView = fragActivity.findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0);
 
-        /*FloatingActionButton floatingActionButton = ((MainActivity) getActivity()).getFloatingActionButton();
-        if (floatingActionButton != null) {
-            floatingActionButton.hide();
-        }*/
-
         // RECUPERANDO DADOS DO USUÁRIO DE DENTRO DO FIREBASE PARA SETAR NA IMAGE VIEW, NO EDIT TEXT E TEXT VIEW
         FirebaseUser usuario = UsuárioFirebase.getUsuarioAtual();
 
@@ -99,7 +86,7 @@ public class ContaFragment extends Fragment {
         // Atualizando foto perfil
         Uri url = usuario.getPhotoUrl(); // pegando url da foto perfil no firebase
         if (url != null) { // Verificar se tem uma foto de perfil no firebase
-            Glide.with(ContaFragment.this).load(url).into(imgPerfil); // Carregar img do firebase p/ imgview
+            Glide.with(context).load(url).into(imgPerfil); // Carregar img do firebase p/ imgview
         }else{
             imgPerfil.setImageResource(R.drawable.perfil_padrao); // img padrão do perfil
         }
@@ -170,12 +157,11 @@ public class ContaFragment extends Fragment {
                         context.getContentResolver(), imgSelecionada); // getContentResolver é um objeto responsavel por recuperar
 
                 if(img != null) {
-                    String caminho = TratamentoDeFotos.tratarCaminhoFoto(context, imgSelecionada);
-                    Bitmap imgRotacionada = TratamentoDeFotos.tratarRotação(img, caminho);
 
-                    imgPerfil.setImageBitmap(imgRotacionada);
+                    Glide.with(context).load(imgSelecionada).into(imgPerfil);
                     CircleImageView foto_nav = headerView.findViewById(R.id.image_nav_header);
-                    foto_nav.setImageBitmap(imgRotacionada);
+
+                    Glide.with(context).load(imgSelecionada).into(foto_nav);
 
                     UsuárioFirebase.atualizarFotoUsuario(imgSelecionada);
                 }
@@ -188,12 +174,12 @@ public class ContaFragment extends Fragment {
     }
 
     // ARRUMANDO O MENU PARA O FRAGMENT 'MINHA CONTA' //
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem item = menu.findItem(R.id.action_search); // deixando o item 'pesquisar' fique invisivel nesse fragment
         item.setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
-    }
+    }*/
 
 
     // TRATAMENTO QUANDO O USUÁRIO NEGAR A PERMISSÃO //

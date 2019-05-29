@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 
         Uri url = user.getPhotoUrl(); // pegando url da foto perfil no firebase
         if (url != null) { // Verificar se tem uma foto de perfil no firebase
-            Glide.with(MainActivity.this).load(url).into(foto_nav); // Carregar img do firebase p/ imgview
+            Glide.with(getContext()).load(url).into(foto_nav); // Carregar img do firebase p/ imgview
         }else{
             foto_nav.setImageResource(R.drawable.perfil_nav); // img padrão do perfil
         }
@@ -176,4 +177,5 @@ public class MainActivity extends AppCompatActivity
     private Context getContext() { // RETORNAR CONTEXTO DA TELA
         return this;
     }
+
 }

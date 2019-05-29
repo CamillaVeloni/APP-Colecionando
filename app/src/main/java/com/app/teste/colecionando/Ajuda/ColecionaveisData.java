@@ -49,6 +49,18 @@ public class ColecionaveisData {
         return etiquetas;
     }
 
+    public List<Colecionável> getColecFiltradosNome(String pesquisa, List<Colecionável> mList){
+        List<Colecionável> tempList = new ArrayList<>();
+
+        for(Colecionável colec : mList){
+            if(colec.getNome().toLowerCase().contains(pesquisa) || colec.getNome().contains(pesquisa)){
+                tempList.add(colec);
+            }
+        }
+
+        return tempList;
+    }
+
     public List<Colecionável> getColecFiltradosCategoria (String categoria, List<Colecionável> mList) {
         List<Colecionável> tempList = new ArrayList<>();
         for (Colecionável colec : mList) {

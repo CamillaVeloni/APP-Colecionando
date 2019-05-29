@@ -11,6 +11,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -57,6 +60,8 @@ public class ColecoesFragment extends Fragment {
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_colecoes, container, false);
+
+        //setHasOptionsMenu(true);
         fragActivity = this.getActivity();
         gridCategorias = getResources()
                 .getStringArray(R.array.minhaColec_categorias);
@@ -195,6 +200,16 @@ public class ColecoesFragment extends Fragment {
         startActivity(intent);
     }
 
+    /*@Override
+    public void onPrepareOptionsMenu(Menu menu) {
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        if(item!=null){
+            item.setVisible(false);
+        }
+
+        super.onPrepareOptionsMenu(menu);
+    }*/
 
     // GARANTINDO QUE IRÁ PASSAR UM CONTEXTO VÁLIDO
     @Override
