@@ -29,7 +29,7 @@ import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private Button btnCadastro;
+    private Button btnCadastro, btnVoltarLogin;
     private ExtendedEditText cadastroNome, cadastroEmail, cadastroSenha;
     private FirebaseAuth mAuth;
     private Usuário usuario;
@@ -40,6 +40,7 @@ public class CadastroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
 
         btnCadastro = findViewById(R.id.btnCadastrar);
+        btnVoltarLogin = findViewById(R.id.btnVoltarLogin);
         cadastroNome = findViewById(R.id.txtNome_cadastro);
         cadastroEmail = findViewById(R.id.txtEmail_cadastro);
         cadastroSenha = findViewById(R.id.txtSenha_cadastro);
@@ -58,6 +59,12 @@ public class CadastroActivity extends AppCompatActivity {
                 }else{
                     chocoBarPadrao("Preencha todos os campos!");
                 }
+            }
+        });
+        btnVoltarLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

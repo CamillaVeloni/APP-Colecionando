@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view); // Referência do layout de navegação
         navigationView.setNavigationItemSelectedListener(this); // Método de navegação na própria activity
 
+
         // EDITANDO INFORMAÇÕES DO NAV_HEADER_MAIN (FOTO PERFIL, NOME, EMAIL)
         FirebaseUser user = mAuth.getCurrentUser();
 
