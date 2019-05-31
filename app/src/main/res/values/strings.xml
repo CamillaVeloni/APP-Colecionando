@@ -58,9 +58,11 @@
     <string name="minhaColec_categoria">Categoria</string>
     <string name="minhaColec_adicionar">Adicionar</string>
     <string name="minhaColec_editar">Atualizar</string>
-    <string name="minhaColec_adquiridoBool">Adquirido</string>
+    <string name="minhaColec_adquirido">Adquirido</string>
+    <string name="minhaColec_favoritos">Não adquirido</string>
     <string name="mColec_foto">Imagem</string>
     <string name="minhaColec_publico">Público</string>
+    <string name="minhaColec_particular">Particular</string>
     <string name="mColec_nomeLista">Nome do colecionável</string>
     <string name="mColec_descLista">Aqui vai a descrição do colecionável</string>
     <string name="mColec_dataLista">01/01/2019</string>

@@ -241,7 +241,7 @@ public class MColecaoPagerFragment extends Fragment {
                         .setTitle("Deletar Colecionável")
                         .setCornerRadius(20)
                         .setMessage("Deseja deletar o colecionável? Não será possível restaurar o colecionável depois!")
-                        .setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+                        .setTextColor(ContextCompat.getColor(context, R.color.colorBlue))
                         .setIcon(R.drawable.ic_icons8_excluir)
                         .addButton("Deletar", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE,
                                 CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {

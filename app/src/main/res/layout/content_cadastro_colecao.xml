@@ -202,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
-                android:text="@string/minhaColec_adquiridoBool"
+                android:text="@string/minhaColec_adquirido"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 

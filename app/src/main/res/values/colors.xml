@@ -2,6 +2,10 @@
 <resources>
     <color name="colorPrimary">#44A2DA</color>
     <color name="colorPrimaryDark">#3087B4</color>
+    <color name="colorBlue">#FF1A6DFF</color>
+    <color name="colorBlueLight">#FF6DC7FF</color>
+    <color name="colorViolet">#FFC822FF</color>
+    <color name="colorVioletLight">#FFE6ABFF</color>
     <color name="colorAccent">#9E9E9E</color>
     <color name="colorText">#FFFFFF</color>
     <color name="cinza_color">#9E9E9E</color>

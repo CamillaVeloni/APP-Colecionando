@@ -17,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
@@ -32,9 +31,7 @@ public class ColecionavelActivity extends AppCompatActivity {
     private CarouselView carouselView;
     private TextView txtNome, txtDesc, txtCateg;
     private TextView txtValor, txtLocal, txtEtiq;
-    private TextView txtLayout_etiq, txtLayout_local;
-    private CheckBox checkAdq;
-    private Switch switchPublic;
+    private TextView txtLayout_etiq, txtLayout_local, txtAdq, txtPublic;
     public static final int REQUEST_CODE = 1;
     private Colecionável colec;
     private boolean boolGaleria;
@@ -67,8 +64,8 @@ public class ColecionavelActivity extends AppCompatActivity {
         txtEtiq = findViewById(R.id.colecSelecionado_etiq);
         txtLayout_local = findViewById(R.id.colecSelecionado_localLayout);
         txtLayout_etiq = findViewById(R.id.colecSelecionado_etiqLayout);
-        checkAdq = findViewById(R.id.colecSelecionado_adq);
-        switchPublic = findViewById(R.id.colecSelecionado_public);
+        txtAdq = findViewById(R.id.colecSelecionado_adq);
+        txtPublic = findViewById(R.id.colecSelecionado_public);
 
         setandoInfo(); // setando informações do colecionável
     }
@@ -89,16 +86,32 @@ public class ColecionavelActivity extends AppCompatActivity {
                 txtEtiq.setText("N/d");
             }
 
-            checkAdq.setChecked(colec.isBoolAdquirido());
-            if(checkAdq.isChecked()){ // SE O CHECKBOX ADQUIRIDO ESTIVER FALSE SETAR VISIBILIDADE DE LOCAL_COMPRA E SWITCH_PUBLIC PARA GONE
+            if(!colec.isBoolAdquirido()){
+                txtAdq.setCompoundDrawablesWithIntrinsicBounds(0,
+                        R.drawable.ic_icons8_favoritos, 0, 0);
+                txtAdq.setText(R.string.minhaColec_favoritos);
+                txtLayout_local.setVisibility(View.GONE);
+                txtLocal.setVisibility(View.GONE);
+                txtPublic.setVisibility(View.GONE);
+            }else{
                 txtLocal.setText(colec.getLocalCompra());
-                switchPublic.setChecked(colec.isBoolPublico());
+                if(!colec.isBoolPublico()){
+                    txtPublic.setText(R.string.minhaColec_particular);
+                    txtPublic.setCompoundDrawablesWithIntrinsicBounds(0,
+                            R.drawable.ic_icons8_trancar, 0, 0);
+                }
+            }
+
+            /*txtAdq.setChecked(colec.isBoolAdquirido());
+            if(txtAdq.isChecked()){ // SE O CHECKBOX ADQUIRIDO ESTIVER FALSE SETAR VISIBILIDADE DE LOCAL_COMPRA E SWITCH_PUBLIC PARA GONE
+                txtLocal.setText(colec.getLocalCompra());
+                txtPublic.setChecked(colec.isBoolPublico());
             }else{
                 txtLayout_local.setVisibility(View.GONE);
                 txtLocal.setVisibility(View.GONE);
-                checkAdq.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                switchPublic.setVisibility(View.GONE);
-            }
+                txtAdq.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                txtPublic.setVisibility(View.GONE);
+            }*/
 
             ImageListener imgListener = new ImageListener() {
                 @Override
