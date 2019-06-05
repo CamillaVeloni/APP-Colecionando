@@ -59,7 +59,7 @@
     <string name="minhaColec_adicionar">Adicionar</string>
     <string name="minhaColec_editar">Atualizar</string>
     <string name="minhaColec_adquirido">Adquirido</string>
-    <string name="minhaColec_favoritos">Não adquirido</string>
+    <string name="minhaColec_favoritos">Favorito</string>
     <string name="mColec_foto">Imagem</string>
     <string name="minhaColec_publico">Público</string>
     <string name="minhaColec_particular">Particular</string>
@@ -99,16 +99,18 @@
         <item>Acessórios</item>
     </string-array>
 
-    <string name="colecPart_textCateg">Selecione a categoria desejada</string>
-    <string name="colecPart_textEtiq">Selecione a etiqueta desejada</string>
-
+        <string name="colecPart_textFiltro">Selecione o filtro desejado</string>
     <string name="titulo_pager_mColeção">Minha Coleção</string>
     <string name="titulo_pager_mClassif">Meu Perfil</string>
-    <string name="colecion_pager">Meus colecionáveis</string>
+    <string name="colecion_pager">Colecionáveis adquiridos</string>
     <string name="favoritos_pager">Favoritos</string>
     <string name="avaliados_pager">Avaliados</string>
+    <string name="totalColeção_pager">Minha Coleção</string>
     <string name="adicionarColec_pager">Adicionar colecionável</string>
     <string name="filtrarColec_pager">Filtrar colecionaveis</string>
     <string name="museuVirtual_maisFiltros">Mais categorias</string>
 
+    <string name="view_errorlist">Conecte-se à internet, você está off-line</string>
+    <string name="view_emptyMlist">Adicione uma colecionável clicando no botão à direita</string>
+    <string name="view_emptyMuseuList">Não existe nenhum colecionável cadastrado nessa categoria</string>
 </resources>

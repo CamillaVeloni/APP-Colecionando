@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 app:hasClearButton="true"
                 app:hasFocus="false"
-                app:iconSignifier="@drawable/ic_icons8_usuario"
+                app:iconSignifier="@drawable/ic_pessoa_24dp"
                 app:isResponsiveIconColor="true"
                 app:labelText="@string/digite_nome">
 

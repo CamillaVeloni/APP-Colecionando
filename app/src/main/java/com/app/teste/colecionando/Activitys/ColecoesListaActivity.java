@@ -1,5 +1,6 @@
 package com.app.teste.colecionando.Activitys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.app.teste.colecionando.Adapter.AdapterColecionaveis;
+import com.app.teste.colecionando.Ajuda.AjudaNetwork;
 import com.app.teste.colecionando.Ajuda.ColecionaveisData;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
@@ -29,10 +33,11 @@ import java.util.List;
 
 public class ColecoesListaActivity extends AppCompatActivity {
 
-
     private RecyclerView recyclerMuseuLista;
     private List<Colecionável> museuVirtual = new ArrayList<>();
     private DatabaseReference coleçãoMuseuRef;
+    private View view_ofList;
+    private static int TYPE_ERROR = 0, TYPE_EMPTY = 1;
     private AdapterColecionaveis adapter;
     private String categoriaSelecionada;
 
@@ -121,43 +126,73 @@ public class ColecoesListaActivity extends AppCompatActivity {
                     .child(categoriaSelecionada);
         }
 
-        ProgressLoadingJIGB.startLoadingJIGB(ColecoesListaActivity.this,
-                 R.raw.trail_loading, // Travando tela para 'Carregar' - progress loading
+        ProgressLoadingJIGB.startLoadingJIGB(getContext(),
+                 R.raw.animation_w500_h500, // Travando tela para 'Carregar' - progress loading
                 "",0,600,600);
 
-        coleçãoMuseuRef.addValueEventListener(new ValueEventListener() { // Recuperando dados do museu virtual e passando para lista
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if(AjudaNetwork.conectadoNet(getContext())){
+            coleçãoMuseuRef.addValueEventListener(new ValueEventListener() { // Recuperando dados do museu virtual e passando para lista
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                museuVirtual.clear();
+                    museuVirtual.clear();
 
-                if(categoriaSelecionada == null){ // Percorre todas as categorias
-                    Log.d("Data", "Entrou na categoria como null 2");
-                    for(DataSnapshot categorias : dataSnapshot.getChildren()){
-                        for(DataSnapshot colecionavel : categorias.getChildren()){ // Percorre todos os colecionaveis dentro de determinada categoria
+                    if(categoriaSelecionada == null){ // Percorre todas as categorias
+                        Log.d("Data", "Entrou na categoria como null 2");
+                        for(DataSnapshot categorias : dataSnapshot.getChildren()){
+                            for(DataSnapshot colecionavel : categorias.getChildren()){ // Percorre todos os colecionaveis dentro de determinada categoria
+                                museuVirtual.add(colecionavel.getValue(Colecionável.class));
+                            }
+                        }
+                    }else{ // Percorre todos os colecionaveis dentro de determinada categoria
+                        Log.d("Data", "Entrou na categoria como true 2");
+                        for(DataSnapshot colecionavel : dataSnapshot.getChildren()){
                             museuVirtual.add(colecionavel.getValue(Colecionável.class));
                         }
                     }
-                }else{ // Percorre todos os colecionaveis dentro de determinada categoria
-                    Log.d("Data", "Entrou na categoria como true 2");
-                    for(DataSnapshot colecionavel : dataSnapshot.getChildren()){
-                        museuVirtual.add(colecionavel.getValue(Colecionável.class));
+
+                    Collections.reverse(museuVirtual);
+                    adapter.notifyDataSetChanged();
+                    ProgressLoadingJIGB.finishLoadingJIGB(getContext());
+
+                    if(museuVirtual.size() == 0){
+                        ProgressLoadingJIGB.finishLoadingJIGB(ColecoesListaActivity.this);
+                        errorEmptyList(TYPE_EMPTY);
                     }
                 }
 
-                Collections.reverse(museuVirtual);
-                adapter.notifyDataSetChanged();
-                ProgressLoadingJIGB.finishLoadingJIGB(ColecoesListaActivity.this);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    ProgressLoadingJIGB.finishLoadingJIGB(ColecoesListaActivity.this);
+                    errorEmptyList(TYPE_ERROR);
+                }
+            });
+        }else{
+            ProgressLoadingJIGB.finishLoadingJIGB(ColecoesListaActivity.this);
+            errorEmptyList(TYPE_ERROR);
+        }
     }
 
+    private void errorEmptyList(int type){ // Método para mostrar uma view no recycler view
+        if(type == 0){ // 0 - error_network
+            view_ofList =
+                    getLayoutInflater().inflate(R.layout.error_view,
+                            (ViewGroup) recyclerMuseuLista.getParent(),
+                            false);
+        }else{ // 1 - empty_list
+            view_ofList =
+                    getLayoutInflater().inflate(R.layout.empty_view,
+                            (ViewGroup) recyclerMuseuLista.getParent(),
+                            false);
+            TextView txtEmpty = view_ofList.findViewById(R.id.txtEmpty);
+            txtEmpty.setText(R.string.view_emptyMuseuList);
+        }
 
+        adapter.setEmptyView(view_ofList);
+    }
+
+    private Context getContext() { // RETORNAR CONTEXTO DA TELA
+        return this;
+    }
 
 }

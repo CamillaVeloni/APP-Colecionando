@@ -1,6 +1,7 @@
 package com.app.teste.colecionando.Activitys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -60,11 +61,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState(); // o toggle vai ser sincronizado e carregado novamente
 
         NavigationView navigationView = findViewById(R.id.nav_view); // Referência do layout de navegação
+
         navigationView.setNavigationItemSelectedListener(this); // Método de navegação na própria activity
 
-        if (savedInstanceState == null) {
-            navigationView.getMenu().performIdentifierAction(R.id.nav_mColeção, 0);
-        }
+        navigationView.setCheckedItem(R.id.nav_mColeção);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_mColeção, 0);
 
         // EDITANDO INFORMAÇÕES DO NAV_HEADER_MAIN (FOTO PERFIL, NOME, EMAIL)
         FirebaseUser user = mAuth.getCurrentUser();
@@ -91,7 +92,13 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            // Fechando aplicação inteira quando for apertado o botão voltar
+            // Em qualquer fragment que estiver selecionado no momento (minha_coleção, museu_virtual e minha_conta)
+            // voltando para cada um deles quando selecionado o app dnv
+            Intent fragment_principal = new Intent(Intent.ACTION_MAIN);
+            fragment_principal.addCategory(Intent.CATEGORY_HOME);
+            fragment_principal.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(fragment_principal);
         }
     }
 

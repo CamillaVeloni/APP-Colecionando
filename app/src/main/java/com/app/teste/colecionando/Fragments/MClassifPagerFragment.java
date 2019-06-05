@@ -1,6 +1,7 @@
 package com.app.teste.colecionando.Fragments;
 
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.teste.colecionando.Ajuda.AjudaNetwork;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
@@ -32,7 +34,8 @@ public class MClassifPagerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private TextView total_colecion, total_favoritos, total_avaliados;
+    private Context context;
+    private TextView total_colecion, total_favoritos, total_coleção;
     private DatabaseReference coleçãoUsuarioRef;
     private FirebaseUser usuario;
     private ImageView imgPerfil;
@@ -45,11 +48,9 @@ public class MClassifPagerFragment extends Fragment {
 
         final int totalCategoria = 17;
 
+        total_coleção = view.findViewById(R.id.totalColeção_pager);
         total_colecion = view.findViewById(R.id.totalMeusColecion_pager);
         total_favoritos = view.findViewById(R.id.totalFavoritos_pager);
-
-        total_avaliados = view.findViewById(R.id.totalAvaliados_pager);
-        total_avaliados.setText("0"); // Implementar avaliar depois
 
         imgPerfil = view.findViewById(R.id.imgColecionador_pager);
         usuario = UsuárioFirebase.getUsuarioAtual();
@@ -63,35 +64,43 @@ public class MClassifPagerFragment extends Fragment {
         coleçãoUsuarioRef = ConfigFirebase.getDatabase() // Recuperando todos os colecionável do usuário através do UID
                 .child("minha_coleção").child(UsuárioFirebase.getIdentificadorUsuario());
 
-        coleçãoUsuarioRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int fav = 0;
-                int col = 0;
+        if(AjudaNetwork.conectadoNet(context)){
+            coleçãoUsuarioRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int coleção = 0;
+                    int fav = 0;
+                    int col = 0;
 
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    Colecionável tempColec = data.getValue(Colecionável.class);
-                    if(tempColec != null){
-                        if(tempColec.isBoolAdquirido()){ // Colecionavel adquirido (meus_colecionaveis)
-                            col += 1;
-                        }else{ // Colecionaveis ainda não adquirido (meus_favoritos)
-                            fav += 1;
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        Colecionável tempColec = data.getValue(Colecionável.class);
+                        if(tempColec != null){
+                            coleção += 1;
+                            if(tempColec.isBoolAdquirido()){ // Colecionavel adquirido (meus_colecionaveis)
+                                col += 1;
+                            }else{ // Colecionaveis ainda não adquirido (meus_favoritos)
+                                fav += 1;
+                            }
                         }
                     }
+                    total_coleção.setText(String.valueOf(coleção));
+                    total_colecion.setText(String.valueOf(col));
+                    total_favoritos.setText(String.valueOf(fav));
                 }
-                total_colecion.setText(String.valueOf(col));
-                total_favoritos.setText(String.valueOf(fav));
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-
+                }
+            });
+        }
 
         return view;
+    }
+
+    public void onAttach(Context context) {
+        this.context = context;
+        super.onAttach(context);
     }
 
 }

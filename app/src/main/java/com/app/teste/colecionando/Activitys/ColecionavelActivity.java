@@ -46,13 +46,9 @@ public class ColecionavelActivity extends AppCompatActivity {
         colec = (Colecionável) intent.getSerializableExtra("colecSelecionado");
         boolGaleria = intent.getBooleanExtra("boolGaleria", false);
 
-        if(!boolGaleria){
-            AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
-            appBarLayout.setVisibility(View.VISIBLE);
-            Toolbar toolbar = findViewById(R.id.toolbar_detColec);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // colocando botão voltar para activity principal
-        }
+        Toolbar toolbar = findViewById(R.id.toolbar_detColec);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // colocando botão voltar para activity principal
 
         // Inicializando componentes
         carouselView = findViewById(R.id.carouselView);
@@ -67,7 +63,7 @@ public class ColecionavelActivity extends AppCompatActivity {
         txtAdq = findViewById(R.id.colecSelecionado_adq);
         txtPublic = findViewById(R.id.colecSelecionado_public);
 
-        setandoInfo(); // setando informações do colecionável
+        setandoInfo(); // setando informações do colecionável do main_activity
     }
 
     private void setandoInfo(){
@@ -148,6 +144,9 @@ public class ColecionavelActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) { // Ações para a action bar ficam aqui
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.action_editar:
                 funçãoEditar();
                 break;
@@ -174,8 +173,8 @@ public class ColecionavelActivity extends AppCompatActivity {
                 .setTitle("Deletar Colecionável")
                 .setCornerRadius(20)
                 .setMessage("Deseja deletar o colecionável? Não será possível restaurar o colecionável depois!")
-                .setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary))
-                .setIcon(R.drawable.ic_delete_24dp)
+                .setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlue))
+                .setIcon(R.drawable.ic_icons8_excluir)
                 .addButton("Deletar", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE,
                         CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
                             @Override
@@ -209,8 +208,10 @@ public class ColecionavelActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             if (resultCode == CadastroColecaoActivity.RESULT_CODE) {
+                colec = null;
                 colec = (Colecionável) data.getSerializableExtra("colecAtualizado");
-                setandoInfo();
+                setandoInfo(); // setando informações passada do cadastro_coleção_activity
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

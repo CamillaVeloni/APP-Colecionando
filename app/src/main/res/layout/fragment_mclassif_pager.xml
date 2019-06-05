@@ -13,7 +13,6 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="12dp"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardBackgroundColor="@color/colorText"
         card_view:cardCornerRadius="2dp"
@@ -43,7 +42,7 @@
                 app:srcCompat="@drawable/perfil_padrao" />
 
             <TextView
-                android:id="@+id/txtColecion_pager"
+                android:id="@+id/txtColeção_pager"
                 style="@style/txtPerfil"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
@@ -52,43 +51,43 @@
                 android:layout_marginLeft="89dp"
                 android:layout_marginTop="23dp"
                 android:layout_marginEnd="46dp"
-                android:layout_toStartOf="@+id/totalMeusColecion_pager"
+                android:layout_toStartOf="@+id/totalColeção_pager"
                 android:layout_toEndOf="@+id/divider"
                 android:maxWidth="239dp"
                 android:maxHeight="40dp"
-                android:text="@string/colecion_pager" />
+                android:text="@string/totalColeção_pager" />
 
             <TextView
-                android:id="@+id/txtFavoritos_pager"
+                android:id="@+id/txtMeusColecion_pager"
                 style="@style/txtPerfil"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtColecion_pager"
+                android:layout_below="@+id/txtColeção_pager"
                 android:layout_marginStart="13dp"
                 android:layout_marginLeft="94dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="46dp"
                 android:layout_marginRight="147dp"
-                android:layout_toStartOf="@+id/totalFavoritos_pager"
+                android:layout_toStartOf="@+id/totalMeusColecion_pager"
                 android:layout_toEndOf="@+id/divider"
                 android:maxWidth="239dp"
                 android:maxHeight="100dp"
-                android:text="@string/favoritos_pager" />
+                android:text="@string/colecion_pager" />
 
             <TextView
-                android:id="@+id/txtAvaliados_pager"
+                android:id="@+id/txtFavoritos_pager"
                 style="@style/txtPerfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtFavoritos_pager"
+                android:layout_below="@+id/txtMeusColecion_pager"
                 android:layout_alignBaseline="@+id/imgColecionador_pager"
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="46dp"
                 android:layout_marginRight="148dp"
-                android:layout_toStartOf="@+id/totalAvaliados_pager"
+                android:layout_toStartOf="@+id/totalFavoritos_pager"
                 android:layout_toEndOf="@+id/divider"
-                android:text="@string/avaliados_pager"
+                android:text="@string/favoritos_pager"
                 android:textAlignment="textStart" />
 
             <View
@@ -104,39 +103,59 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
+                android:id="@+id/totalMeusColecion_pager"
+                style="@style/txtNumeros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/totalColeção_pager"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
                 android:id="@+id/totalFavoritos_pager"
                 style="@style/txtNumeros"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/totalMeusColecion_pager"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="10dp"
-                android:text="X" />
-
-            <TextView
-                android:id="@+id/totalAvaliados_pager"
-                style="@style/txtNumeros"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/totalFavoritos_pager"
-                android:layout_alignParentEnd="true"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="10dp"
-                android:text="X" />
+                android:layout_marginEnd="10dp" />
 
             <TextView
-                android:id="@+id/totalMeusColecion_pager"
+                android:id="@+id/totalColeção_pager"
                 style="@style/txtNumeros"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="25dp"
-                android:layout_marginEnd="10dp"
-                android:text="X" />
+                android:layout_marginEnd="10dp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@color/colorText"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="6dp">
+
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
 
 </LinearLayout>
