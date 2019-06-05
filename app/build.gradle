@@ -59,6 +59,8 @@ dependencies {
     // DEPENDÊNCIA RECYCLER VIEW ADAPTER HELPER
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
+    implementation "com.airbnb.android:lottie:2.5.0"
+
     // DEPENDÊNCIA PROGRESS - LOADING //
     implementation 'com.jgb.lordsaac.igb.progresslitieigb:progresslottieigb:0.0.2'
 

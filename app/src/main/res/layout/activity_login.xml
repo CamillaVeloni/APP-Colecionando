@@ -81,7 +81,7 @@
                 android:layout_marginTop="8dp"
                 app:hasClearButton="true"
                 app:hasFocus="false"
-                app:iconSignifier="@drawable/ic_vpn_key_24dp"
+                app:iconSignifier="@drawable/ic_icons8_chave"
                 app:isResponsiveIconColor="true"
                 app:labelText="@string/digite_senha">
 

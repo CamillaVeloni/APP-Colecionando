@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +32,7 @@ import android.widget.TextView;
 import com.app.teste.colecionando.Activitys.CadastroColecaoActivity;
 import com.app.teste.colecionando.Activitys.ColecionavelActivity;
 import com.app.teste.colecionando.Adapter.AdapterColecionaveis;
+import com.app.teste.colecionando.Ajuda.AjudaNetwork;
 import com.app.teste.colecionando.Ajuda.ColecionaveisData;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
@@ -71,6 +70,8 @@ public class MColecaoPagerFragment extends Fragment {
     private DatabaseReference coleçãoUsuarioRef;
     private int posiçãoAnterior;
     ColecionaveisData mData = new ColecionaveisData();
+    private View view_ofList;
+    private static int TYPE_ERROR = 0, TYPE_EMPTY = 1;
     private boolean restaurado;
     private Colecionável colecRestaurado;
     private AdapterColecionaveis adapter;
@@ -130,8 +131,9 @@ public class MColecaoPagerFragment extends Fragment {
 
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(context);
         builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
-        builder.setTitle("Selecione o tipo de filtro ou apague o filtro já colocado:");
-        builder.setItems(new String[]{"Categoria", "Etiqueta personalizada", "Apagar filtro"},
+        builder.setTitle("Selecione o tipo de filtro ou apague o filtro já configurado:");
+        builder.setItems(new String[]{"Categoria", "Etiqueta personalizada",
+                        "Obtido ou no favoritos", "Apagar filtro"},
                 new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int index) {
@@ -140,6 +142,9 @@ public class MColecaoPagerFragment extends Fragment {
                     selecionandoFiltro(index);
                     dialogInterface.dismiss();
                 }else if(index == 1){ // etiq
+                    selecionandoFiltro(index);
+                    dialogInterface.dismiss();
+                }else if(index == 2){
                     selecionandoFiltro(index);
                     dialogInterface.dismiss();
                 }else{ // apagar filtro
@@ -161,15 +166,17 @@ public class MColecaoPagerFragment extends Fragment {
         View viewSpinner = getLayoutInflater() // Converter em objeto View
                 .inflate(R.layout.dialog_spinner, null); // inflar o layout xml
         final Spinner sp = viewSpinner.findViewById(R.id.spinnerFiltro);
-        TextView txtFiltroSelec = viewSpinner.findViewById(R.id.txtFiltroSelecionado);
         List<String> listaFiltros;
 
         // 0 - categoria, 1 - etiqueta
         if(index == 0){
             listaFiltros = mData.getKeysUnicasCategoria();
-        }else{
-            txtFiltroSelec.setText(getResources().getString(R.string.colecPart_textEtiq));
+        }else if (index == 1){
             listaFiltros = mData.getKeysUnicasEtiqueta();
+        }else{
+            listaFiltros = new ArrayList<>();
+            listaFiltros.add("Obtidos");
+            listaFiltros.add("Favorito");
         }
 
         ArrayAdapter<String> adapterCateg = new ArrayAdapter<String>(context,
@@ -184,23 +191,39 @@ public class MColecaoPagerFragment extends Fragment {
                 CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String filtrarCategoria = sp.getSelectedItem().toString();
-                        List<Colecionável> listaFiltrada = mData.getTdsColecionaveis();
 
-                        if(index == 0){
-                            listaFiltrada = mData.getColecFiltradosCategoria(filtrarCategoria,
-                                    listaFiltrada);
+                        if(AjudaNetwork.conectadoNet(context)){
+                            String stringFiltro = sp.getSelectedItem().toString();
+                            List<Colecionável> listaFiltrada = mData.getTdsColecionaveis();
+
+                            if(index == 0){
+                                listaFiltrada = mData.getColecFiltradosCategoria(stringFiltro,
+                                        listaFiltrada);
+                            }else if(index == 1){
+                                listaFiltrada = mData.getColecFiltradosEtiqueta(stringFiltro,
+                                        listaFiltrada);
+                            }else{
+                                boolean boolObtFav = false;
+                                if(stringFiltro.equals("Obtidos")){
+                                    boolObtFav = true;
+                                }
+                                listaFiltrada = mData.getColecFiltroAdquiridos(boolObtFav, listaFiltrada);
+                            }
+
+                            coleção.clear();
+                            coleção.addAll(listaFiltrada);
+                            adapter.notifyDataSetChanged();
+
+                            if(coleção.size() == 0){
+                                errorEmptyList(TYPE_EMPTY);
+                            }
                         }else{
-                            listaFiltrada = mData.getColecFiltradosEtiqueta(filtrarCategoria,
-                                    listaFiltrada);
+                            errorEmptyList(TYPE_ERROR);
                         }
-
-                        coleção.clear();
-                        coleção.addAll(listaFiltrada);
-                        adapter.notifyDataSetChanged();
 
                         dialogInterface.dismiss();
                     }
+
                 });
         builder.addButton("Cancelar", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE,
                 CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
@@ -241,8 +264,8 @@ public class MColecaoPagerFragment extends Fragment {
                         .setTitle("Deletar Colecionável")
                         .setCornerRadius(20)
                         .setMessage("Deseja deletar o colecionável? Não será possível restaurar o colecionável depois!")
-                        .setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                        .setIcon(R.drawable.ic_delete_24dp)
+                        .setTextColor(ContextCompat.getColor(context, R.color.colorBlue))
+                        .setIcon(R.drawable.ic_icons8_excluir)
                         .addButton("Deletar", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE,
                                 CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
                                     @Override
@@ -318,30 +341,41 @@ public class MColecaoPagerFragment extends Fragment {
 
     public void inicializarData(){
 
-        ProgressLoadingJIGB.startLoadingJIGB(context,R.raw.trail_loading, // Travando tela para 'Carregar' - progress loading
+        ProgressLoadingJIGB.startLoadingJIGB(context,R.raw.animation_w500_h500, // Travando tela para 'Carregar' - progress loading
                 "",0,600,600);
 
-        coleçãoUsuarioRef.addValueEventListener(new ValueEventListener() { // Recuperando dados da minha_coleção passando para lista
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mData.getTdsColecionaveis().clear();
-                coleção.clear();
-                List<Colecionável> temp = new ArrayList<>();
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    temp.add(data.getValue(Colecionável.class));
+        if(AjudaNetwork.conectadoNet(context)){
+            coleçãoUsuarioRef.addValueEventListener(new ValueEventListener() { // Recuperando dados da minha_coleção passando para lista
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    mData.getTdsColecionaveis().clear();
+                    coleção.clear();
+                    List<Colecionável> temp = new ArrayList<>();
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+                        temp.add(data.getValue(Colecionável.class));
+                    }
+                    Collections.reverse(temp);
+                    mData.setmList(temp);
+                    coleção.addAll(mData.getTdsColecionaveis());
+                    adapter.notifyDataSetChanged();
+                    ProgressLoadingJIGB.finishLoadingJIGB(context); // Retirando o progress loading
+
+                    if(coleção.size() == 0){
+                        errorEmptyList(TYPE_EMPTY);
+                    }
                 }
-                Collections.reverse(temp);
-                mData.setmList(temp);
-                coleção.addAll(mData.getTdsColecionaveis());
-                adapter.notifyDataSetChanged();
-                ProgressLoadingJIGB.finishLoadingJIGB(context); // Retirando o progress loading
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    ProgressLoadingJIGB.finishLoadingJIGB(context); // Retirando o progress loading
+                    errorEmptyList(TYPE_ERROR);
+                }
+            });
+        }else{
+            ProgressLoadingJIGB.finishLoadingJIGB(context); // Retirando o progress loading
+            errorEmptyList(TYPE_ERROR);
 
-            }
-        });
+        }
     }
 
     @Override
@@ -375,9 +409,6 @@ public class MColecaoPagerFragment extends Fragment {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.i("onQuery", "Submit: " + query);
-                    if(query != null && !query.isEmpty() ){
-                        pesquisarColecionavelNome(query);
-                    }
                     return true;
                 }
             };
@@ -404,6 +435,22 @@ public class MColecaoPagerFragment extends Fragment {
                 .setDuration(ChocoBar.LENGTH_SHORT)
                 .build()
                 .show();
+    }
+
+    private void errorEmptyList(int type){ // Método para mostrar uma view no recycler view
+        if(type == 0){ // 0 - error_network
+            view_ofList =
+                    getLayoutInflater().inflate(R.layout.error_view,
+                            (ViewGroup) recyclerMinhaColeção.getParent(),
+                            false);
+        }else{ // 1 - empty_list
+            view_ofList =
+                    getLayoutInflater().inflate(R.layout.empty_view,
+                            (ViewGroup) recyclerMinhaColeção.getParent(),
+                            false);
+        }
+
+        adapter.setEmptyView(view_ofList);
     }
 
     public void onAttach(Context context) {

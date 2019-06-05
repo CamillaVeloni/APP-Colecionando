@@ -19,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.app.teste.colecionando.Ajuda.AjudaNetwork;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
@@ -59,6 +61,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
     private Button btnAdd;
     private ImageButton btnDel01, btnDel02, btnDel03;
     private EditText txtNome, txtDesc, txtComp, txtEtiq;
+    private boolean boolEditar;
     private ImageView img1, img2, img3;
     private CurrencyEditText txtValor;
     private Spinner spinnerCategorias;
@@ -142,7 +145,8 @@ public class CadastroColecaoActivity extends AppCompatActivity
 
         // SETANDO INSTÂNCIA E AJEITANDO ACTIVITY PARA 'EDITAR'
 
-        if(getIntent().getBooleanExtra("boolEditar", false)){
+        boolEditar = getIntent().getBooleanExtra("boolEditar", false);
+        if(boolEditar){
             setTitle(getResources().getString(R.string.title_editar_colec));
             btnAdd.setText(getResources().getString(R.string.minhaColec_editar));
 
@@ -162,6 +166,16 @@ public class CadastroColecaoActivity extends AppCompatActivity
         Locale local = new Locale("pt", "BR");
         txtValor.setLocale(local);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // CLICK LISTENERS //
@@ -190,10 +204,15 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 imgUrl3 = "";
                 break;
             case R.id.cadastroColec_btnAdd: // Se clicou no btn adicionar
-                verificarCampos();
+                if(AjudaNetwork.conectadoNet(getContext())){
+                    verificarCampos();
+                }else{
+                    chocoBarPadrao(getResources().getString(R.string.view_errorlist));
+                }
                 break;
         }
     }
+
     public void escolherFoto(int rqCode){ // click das imagens
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -224,7 +243,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
                             txtValor.getText().toString(), spinnerCategorias.getSelectedItem().toString(),
                             checkAdq.isChecked()); // passando nome, descrição, valor, categoria, checkAdquirido
 
-                    if(getIntent().getBooleanExtra("boolEditar", false)){
+                    if(boolEditar){
                         colecionávelAdd.setIdColecionavel(colecEdit.getIdColecionavel());
                     }
 
@@ -259,7 +278,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
     }
     public void salvarDadosFirebase(){ // MÉTODO PRINCIPAL NO SALVAMENTO DOS DADOS NO FIREBASE
 
-        ProgressLoadingJIGB.startLoadingJIGB(getContext(),R.raw.trail_loading, // Travando tela para 'Carregar' - progress loading
+        ProgressLoadingJIGB.startLoadingJIGB(getContext(),R.raw.animation_w500_h500, // Travando tela para 'Carregar' - progress loading
                 "",0,600,600);
 
         for(int i = 0; i < listaCaminhosFotos.size(); i++){
@@ -292,7 +311,7 @@ public class CadastroColecaoActivity extends AppCompatActivity
                             colecionável.salvarColecionável(); // SALVANDO COLECIONÁVEL ATRAVÉS DO MODELO DE CLASSE 'COLECIONÁVEL'
                             ProgressLoadingJIGB.finishLoadingJIGB(getContext()); // Retirando o progress loading
 
-                            if(getIntent().getBooleanExtra("boolEditar", false)){
+                            if(boolEditar){
                                 Intent intent = new Intent();
                                 intent.putExtra("colecAtualizado", colecionável);
                                 setResult(RESULT_CODE, intent);
@@ -305,8 +324,8 @@ public class CadastroColecaoActivity extends AppCompatActivity
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                chocoBarPadrao("Erro ao dar upload na imagem.");
                 ProgressLoadingJIGB.finishLoadingJIGB(getContext()); // Retirando o progress loading
+                chocoBarPadrao("Erro ao dar upload na imagem.");
                 Log.d("ERRO IMG", "Falha ao fazer upload: " + e.getMessage());
             }
         });
@@ -391,7 +410,6 @@ public class CadastroColecaoActivity extends AppCompatActivity
                 // os conteúdos do app android
 
                 if(img != null){
-                    int num = 0;
 
                     // Mostrando foto em umas das 3 imgViews
                     if(requestCode == 1){

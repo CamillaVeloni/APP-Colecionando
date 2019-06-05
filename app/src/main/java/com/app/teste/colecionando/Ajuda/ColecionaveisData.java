@@ -72,6 +72,24 @@ public class ColecionaveisData {
         return tempList;
     }
 
+    public List<Colecionável> getColecFiltroAdquiridos (boolean obtidoFavorito, List<Colecionável> mList){
+        List<Colecionável> tempList = new ArrayList<>();
+
+        for(Colecionável colec : mList){
+            if(colec.isBoolAdquirido()){ // true - colecionável obtido
+                if(colec.isBoolAdquirido() == obtidoFavorito){
+                    tempList.add(colec);
+                }
+            }else{
+                if(colec.isBoolAdquirido() == obtidoFavorito){
+                    tempList.add(colec);
+                }
+            }
+
+        }
+        return tempList;
+    }
+
     public List<Colecionável> getColecFiltradosEtiqueta (String etiqueta, List<Colecionável> mList) {
         List<Colecionável> tempList = new ArrayList<>();
         for (Colecionável colec : mList) {

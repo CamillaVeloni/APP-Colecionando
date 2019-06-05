@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.teste.colecionando.Ajuda.AjudaNetwork;
 import com.app.teste.colecionando.Ajuda.UsuárioFirebase;
 import com.app.teste.colecionando.ConfiguraçãoFirebase.ConfigFirebase;
 import com.app.teste.colecionando.R;
@@ -163,7 +164,11 @@ public class ContaFragment extends Fragment {
 
                     Glide.with(context).load(imgSelecionada).into(foto_nav);
 
-                    UsuárioFirebase.atualizarFotoUsuario(imgSelecionada);
+                    if(AjudaNetwork.conectadoNet(context)){
+                        UsuárioFirebase.atualizarFotoUsuario(imgSelecionada);
+                    }else{
+                        chocoBarPadrao("Problema ao conectar à internet.");
+                    }
                 }
 
             } catch (IOException e) {

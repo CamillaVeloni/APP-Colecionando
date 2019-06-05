@@ -1,11 +1,13 @@
 package com.app.teste.colecionando.Activitys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +35,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
-    private MinhaColecaoFragment fragMinhaColecão;
     private FragmentTransaction transaction;
     public FloatingActionButton fab;
 
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mAuth = ConfigFirebase.getmAuth();
-        fragMinhaColecão = new MinhaColecaoFragment();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); // usado para que a toolbar funcione bem com versões anteriores
 
@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState(); // o toggle vai ser sincronizado e carregado novamente
 
         NavigationView navigationView = findViewById(R.id.nav_view); // Referência do layout de navegação
+
         navigationView.setNavigationItemSelectedListener(this); // Método de navegação na própria activity
+
+        navigationView.setCheckedItem(R.id.nav_mColeção);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_mColeção, 0);
 
         // EDITANDO INFORMAÇÕES DO NAV_HEADER_MAIN (FOTO PERFIL, NOME, EMAIL)
         FirebaseUser user = mAuth.getCurrentUser();
@@ -80,14 +84,6 @@ public class MainActivity extends AppCompatActivity
         }else{
             foto_nav.setImageResource(R.drawable.perfil_nav); // img padrão do perfil
         }
-
-        if (savedInstanceState == null) {
-            setTitle(R.string.title_activity_main);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.FrameLayoutContainer, fragMinhaColecão)
-                    .commit();
-        }
     }
 
     @Override
@@ -96,7 +92,13 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            // Fechando aplicação inteira quando for apertado o botão voltar
+            // Em qualquer fragment que estiver selecionado no momento (minha_coleção, museu_virtual e minha_conta)
+            // voltando para cada um deles quando selecionado o app dnv
+            Intent fragment_principal = new Intent(Intent.ACTION_MAIN);
+            fragment_principal.addCategory(Intent.CATEGORY_HOME);
+            fragment_principal.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(fragment_principal);
         }
     }
 
@@ -105,32 +107,41 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) { // Implementado por causa do uso da interface
         // Método chamado sempre que o usuário clicar em uma das opções do Nav
+        FragmentManager fragmentManager = getSupportFragmentManager();
         int id = item.getItemId(); // Recuperar o id do item clicado
         // Verificar qual a opção clicada através do id
-        if (id == R.id.nav_mColeção) { // Entrar fragment Minha Coleção
-            setTitle(R.string.title_activity_main);
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.FrameLayoutContainer, fragMinhaColecão);
-            transaction.commit();
 
-        } else if (id == R.id.nav_coleções) { // Entrar fragment Galeria de Coleções
-            ColecoesFragment colecFragment = new ColecoesFragment();
-            setTitle(R.string.title_galeria_colec);
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.FrameLayoutContainer, colecFragment);
-            transaction.addToBackStack(null).commit();
+        switch (id){
+            case R.id.nav_mColeção:
+                MinhaColecaoFragment minhaColecFragment = new MinhaColecaoFragment();
+                setTitle(R.string.title_activity_main);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.FrameLayoutContainer, minhaColecFragment)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case R.id.nav_coleções:
+                ColecoesFragment colecFragment = new ColecoesFragment();
+                setTitle(R.string.title_galeria_colec);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.FrameLayoutContainer, colecFragment)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case R.id.nav_mConta:
+                setTitle(R.string.title_edit_conta);
+                ContaFragment contaFragment = new ContaFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.FrameLayoutContainer, contaFragment)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case R.id.nav_contato:
 
-        } else if (id == R.id.nav_mConta) { // Entrar fragment Minha Conta
-            setTitle(R.string.title_edit_conta);
-            ContaFragment contaFragment = new ContaFragment();
-            contaFragment.setHasOptionsMenu(true); // Método para que a fragment possa reescrever o onCreateOptionsMenu
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.FrameLayoutContainer, contaFragment);
-            transaction.commit();
+                break;
+            case R.id.nav_sobre:
 
-        } else if (id == R.id.nav_contato) {
-
-        } else if (id == R.id.nav_sobre) {
+                break;
 
         }
 

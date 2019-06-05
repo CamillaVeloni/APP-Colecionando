@@ -17,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.teste.colecionando.Modelos.Colecionável;
 import com.app.teste.colecionando.R;
@@ -32,9 +31,7 @@ public class ColecionavelActivity extends AppCompatActivity {
     private CarouselView carouselView;
     private TextView txtNome, txtDesc, txtCateg;
     private TextView txtValor, txtLocal, txtEtiq;
-    private TextView txtLayout_etiq, txtLayout_local;
-    private CheckBox checkAdq;
-    private Switch switchPublic;
+    private TextView txtLayout_etiq, txtLayout_local, txtAdq, txtPublic;
     public static final int REQUEST_CODE = 1;
     private Colecionável colec;
     private boolean boolGaleria;
@@ -49,13 +46,9 @@ public class ColecionavelActivity extends AppCompatActivity {
         colec = (Colecionável) intent.getSerializableExtra("colecSelecionado");
         boolGaleria = intent.getBooleanExtra("boolGaleria", false);
 
-        if(!boolGaleria){
-            AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
-            appBarLayout.setVisibility(View.VISIBLE);
-            Toolbar toolbar = findViewById(R.id.toolbar_detColec);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // colocando botão voltar para activity principal
-        }
+        Toolbar toolbar = findViewById(R.id.toolbar_detColec);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // colocando botão voltar para activity principal
 
         // Inicializando componentes
         carouselView = findViewById(R.id.carouselView);
@@ -67,10 +60,10 @@ public class ColecionavelActivity extends AppCompatActivity {
         txtEtiq = findViewById(R.id.colecSelecionado_etiq);
         txtLayout_local = findViewById(R.id.colecSelecionado_localLayout);
         txtLayout_etiq = findViewById(R.id.colecSelecionado_etiqLayout);
-        checkAdq = findViewById(R.id.colecSelecionado_adq);
-        switchPublic = findViewById(R.id.colecSelecionado_public);
+        txtAdq = findViewById(R.id.colecSelecionado_adq);
+        txtPublic = findViewById(R.id.colecSelecionado_public);
 
-        setandoInfo(); // setando informações do colecionável
+        setandoInfo(); // setando informações do colecionável do main_activity
     }
 
     private void setandoInfo(){
@@ -89,16 +82,32 @@ public class ColecionavelActivity extends AppCompatActivity {
                 txtEtiq.setText("N/d");
             }
 
-            checkAdq.setChecked(colec.isBoolAdquirido());
-            if(checkAdq.isChecked()){ // SE O CHECKBOX ADQUIRIDO ESTIVER FALSE SETAR VISIBILIDADE DE LOCAL_COMPRA E SWITCH_PUBLIC PARA GONE
+            if(!colec.isBoolAdquirido()){
+                txtAdq.setCompoundDrawablesWithIntrinsicBounds(0,
+                        R.drawable.ic_icons8_favoritos, 0, 0);
+                txtAdq.setText(R.string.minhaColec_favoritos);
+                txtLayout_local.setVisibility(View.GONE);
+                txtLocal.setVisibility(View.GONE);
+                txtPublic.setVisibility(View.GONE);
+            }else{
                 txtLocal.setText(colec.getLocalCompra());
-                switchPublic.setChecked(colec.isBoolPublico());
+                if(!colec.isBoolPublico()){
+                    txtPublic.setText(R.string.minhaColec_particular);
+                    txtPublic.setCompoundDrawablesWithIntrinsicBounds(0,
+                            R.drawable.ic_icons8_trancar, 0, 0);
+                }
+            }
+
+            /*txtAdq.setChecked(colec.isBoolAdquirido());
+            if(txtAdq.isChecked()){ // SE O CHECKBOX ADQUIRIDO ESTIVER FALSE SETAR VISIBILIDADE DE LOCAL_COMPRA E SWITCH_PUBLIC PARA GONE
+                txtLocal.setText(colec.getLocalCompra());
+                txtPublic.setChecked(colec.isBoolPublico());
             }else{
                 txtLayout_local.setVisibility(View.GONE);
                 txtLocal.setVisibility(View.GONE);
-                checkAdq.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                switchPublic.setVisibility(View.GONE);
-            }
+                txtAdq.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                txtPublic.setVisibility(View.GONE);
+            }*/
 
             ImageListener imgListener = new ImageListener() {
                 @Override
@@ -135,6 +144,9 @@ public class ColecionavelActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) { // Ações para a action bar ficam aqui
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.action_editar:
                 funçãoEditar();
                 break;
@@ -161,8 +173,8 @@ public class ColecionavelActivity extends AppCompatActivity {
                 .setTitle("Deletar Colecionável")
                 .setCornerRadius(20)
                 .setMessage("Deseja deletar o colecionável? Não será possível restaurar o colecionável depois!")
-                .setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary))
-                .setIcon(R.drawable.ic_delete_24dp)
+                .setTextColor(ContextCompat.getColor(getContext(), R.color.colorBlue))
+                .setIcon(R.drawable.ic_icons8_excluir)
                 .addButton("Deletar", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE,
                         CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
                             @Override
@@ -196,8 +208,10 @@ public class ColecionavelActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             if (resultCode == CadastroColecaoActivity.RESULT_CODE) {
+                colec = null;
                 colec = (Colecionável) data.getSerializableExtra("colecAtualizado");
-                setandoInfo();
+                setandoInfo(); // setando informações passada do cadastro_coleção_activity
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

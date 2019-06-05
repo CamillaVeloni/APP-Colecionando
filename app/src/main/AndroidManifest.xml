@@ -3,6 +3,8 @@
     package="com.app.teste.colecionando">
     <!-- USES-FEATURE - Definir recursos que são necessários p/ o app funcione corretamente -->
     <!-- Read_EXTERNAL_STORAGE - Permite que o app possa ler o armazenamento externo (permissão perigosa) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -23,7 +25,8 @@
         <activity
             android:name=".Activitys.CadastroColecaoActivity"
             android:label="@string/title_cadastro_colec"
-            android:parentActivityName=".Activitys.MainActivity" />
+            android:parentActivityName=".Activitys.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activitys.CadastroActivity"
             android:screenOrientation="portrait" />

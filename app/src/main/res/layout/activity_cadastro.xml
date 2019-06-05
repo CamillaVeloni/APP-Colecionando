@@ -118,7 +118,7 @@
                 android:layout_marginTop="8dp"
                 app:hasFocus="false"
                 app:hasClearButton="true"
-                app:iconSignifier="@drawable/ic_vpn_key_24dp"
+                app:iconSignifier="@drawable/ic_icons8_chave"
                 app:isResponsiveIconColor="true"
                 app:labelText="@string/digite_senha">
 
@@ -177,7 +177,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/btnLoginUp"
+                android:id="@+id/btnVoltarLogin"
                 android:layout_width="269dp"
                 android:layout_height="45dp"
                 android:background="@drawable/btn_shape"
